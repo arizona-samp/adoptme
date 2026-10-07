@@ -41,27 +41,27 @@ const ITEMS = {
       rarity:"COMMON",
       price:82,
       image:"images/ghost-dog.png",
-      fallback:"🐶",
+      fallback:"🎃",
       halloween:true
     },
 
     {
-      id:"cat",
-      name:"Cat",
-      rarity:"COMMON",
-      price:120,
-      image:"images/pet-cat.png",
-      fallback:"🐱",
+      id:"Turtle",
+      name:"Turtle",
+      rarity:"LEGENDARY",
+      price:781,
+      image:"images/turtle.png",
+      fallback:"🎃",
       halloween:false
     },
 
     {
-      id:"bunny",
-      name:"Bunny",
-      rarity:"UNCOMMON",
-      price:220,
-      image:"images/pet-bunny.png",
-      fallback:"🐰",
+      id:"Kangaroo",
+      name:"Kangaroo",
+      rarity:"LEGENDARY",
+      price:610,
+      image:"images/Kangaroo.png",
+      fallback:"🎃",
       halloween:false
     },
 
@@ -71,7 +71,7 @@ const ITEMS = {
       rarity:"ULTRA-RARE",
       price:480,
       image:"images/pet-red-panda.png",
-      fallback:"🦊",
+      fallback:"🎃",
       halloween:false
     },
 
@@ -81,7 +81,7 @@ const ITEMS = {
       rarity:"ULTRA-RARE",
       price:550,
       image:"images/pet-penguin.png",
-      fallback:"🐧",
+      fallback:"🎃",
       halloween:false
     },
 
@@ -91,7 +91,7 @@ const ITEMS = {
       rarity:"LEGENDARY",
       price:620,
       image:"images/pet-dragon.png",
-      fallback:"🐲",
+      fallback:"🎃",
       halloween:false
     },
 
@@ -101,7 +101,7 @@ const ITEMS = {
       rarity:"LEGENDARY",
       price:900,
       image:"images/pet-evil-chick.png",
-      fallback:"🐣",
+      fallback:"🎃",
       halloween:true
     },
 
@@ -121,7 +121,7 @@ const ITEMS = {
       rarity:"LEGENDARY",
       price:1100,
       image:"images/pet-turtle.png",
-      fallback:"🐢",
+      fallback:"🎃",
       halloween:false
     },
 
@@ -131,7 +131,7 @@ const ITEMS = {
       rarity:"ULTRA-RARE",
       price:1250,
       image:"images/pet-werewolf.png",
-      fallback:"🐺",
+      fallback:"🎃",
       halloween:true
     },
 
@@ -141,7 +141,7 @@ const ITEMS = {
       rarity:"LEGENDARY",
       price:1800,
       image:"images/pet-ghost-dragon.png",
-      fallback:"🐉",
+      fallback:"🎃",
       halloween:true
     },
 
@@ -151,7 +151,7 @@ const ITEMS = {
       rarity:"LEGENDARY",
       price:1960,
       image:"images/pet-unicorn.png",
-      fallback:"🦄",
+      fallback:"🎃",
       halloween:false
     },
 
@@ -161,7 +161,7 @@ const ITEMS = {
       rarity:"LEGENDARY",
       price:3000,
       image:"images/pet-bat-dragon.png",
-      fallback:"🦇",
+      fallback:"🎃",
       halloween:true
     }
 
@@ -176,7 +176,7 @@ const ITEMS = {
       rarity:"POTION",
       price:180,
       image:"images/potion-speed.png",
-      fallback:"⚡",
+      fallback:"🎃",
       halloween:false
     },
 
@@ -186,7 +186,7 @@ const ITEMS = {
       rarity:"POTION",
       price:350,
       image:"images/potion-ride.png",
-      fallback:"🧪",
+      fallback:"🎃",
       halloween:false
     },
 
@@ -196,7 +196,7 @@ const ITEMS = {
       rarity:"POTION",
       price:620,
       image:"images/potion-fly.png",
-      fallback:"🧪",
+      fallback:"🎃",
       halloween:false
     },
 
@@ -216,7 +216,7 @@ const ITEMS = {
       rarity:"LIMITED",
       price:1250,
       image:"images/potion-shadow.png",
-      fallback:"🖤",
+      fallback:"🎃",
       halloween:true
     }
 
