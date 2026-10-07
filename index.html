@@ -2,6 +2,7 @@
 <html lang="ru">
 
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -22,29 +23,15 @@
     rel="stylesheet"
     href="style.css"
   >
+
 </head>
 
 <body>
 
-  <!-- BACKGROUND -->
 
-  <div class="scene-glow glow-left"></div>
-  <div class="scene-glow glow-right"></div>
-
-  <div class="moon"></div>
-
-  <div class="fog fog-1"></div>
-  <div class="fog fog-2"></div>
-
-  <div class="stars"></div>
-
-  <div
-    class="falling-decor"
-    id="fallingDecor"
-  ></div>
-
-
-  <!-- HEADER -->
+  <!-- =====================================================
+       FIXED HEADER
+  ====================================================== -->
 
   <header class="topbar">
 
@@ -54,7 +41,7 @@
         🎃
       </div>
 
-      <div>
+      <div class="brand-info">
 
         <div class="brand-title">
           HAUNTED ADOPT
@@ -69,7 +56,25 @@
     </div>
 
 
-    <div class="top-actions">
+    <div class="header-actions">
+
+      <!-- LOGIN -->
+
+      <button
+        class="login-btn"
+        id="loginButton"
+      >
+
+        <span class="login-icon">
+          👤
+        </span>
+
+        <span>
+          ВОЙТИ
+        </span>
+
+      </button>
+
 
       <!-- DEPOSIT -->
 
@@ -143,6 +148,31 @@
 
 
 
+  <!-- =====================================================
+       BACKGROUND
+  ====================================================== -->
+
+  <div class="scene-glow glow-left"></div>
+  <div class="scene-glow glow-right"></div>
+
+  <div class="moon"></div>
+
+  <div class="fog fog-1"></div>
+  <div class="fog fog-2"></div>
+
+  <div class="stars"></div>
+
+  <div
+    class="falling-decor"
+    id="fallingDecor"
+  ></div>
+
+
+
+  <!-- =====================================================
+       MAIN
+  ====================================================== -->
+
   <main class="page">
 
 
@@ -161,15 +191,17 @@
       </h1>
 
       <p>
-        Покупай питомцев, отправляй их
-        в апгрейд и охоться за редкими предметами.
+        Покупай питомцев, добавляй их свойства
+        и отправляй в апгрейд за редкими предметами.
       </p>
 
     </section>
 
 
 
-    <!-- CATEGORY -->
+    <!-- =================================================
+         CATEGORY
+    ================================================== -->
 
     <section class="mode-bar">
 
@@ -225,7 +257,9 @@
 
 
 
-    <!-- UPGRADE -->
+    <!-- =================================================
+         UPGRADE
+    ================================================== -->
 
     <section class="forge-card">
 
@@ -316,8 +350,6 @@
           </button>
 
 
-          <!-- CHANCES -->
-
           <div class="chance-block">
 
             <div class="chance-title">
@@ -334,14 +366,12 @@
                 5%
               </button>
 
-
               <button
                 class="chance-btn"
                 data-chance="15"
               >
                 15%
               </button>
-
 
               <button
                 class="chance-btn"
@@ -350,14 +380,12 @@
                 30%
               </button>
 
-
               <button
                 class="chance-btn active"
                 data-chance="50"
               >
                 50%
               </button>
-
 
               <button
                 class="chance-btn"
@@ -414,8 +442,7 @@
 
 
           <small>
-            Предмет используется
-            вместо денег
+            Апгрейд использует предмет
           </small>
 
         </section>
@@ -462,15 +489,15 @@
             <div class="item-details">
 
               <b id="targetName">
-                Unicorn
+                Bat Dragon
               </b>
 
               <span id="targetMeta">
-                LEGENDARY • FR
+                LEGENDARY
               </span>
 
               <strong id="targetPrice">
-                1 960 ₽
+                3 000 ₽
               </strong>
 
             </div>
@@ -511,7 +538,9 @@
 
 
 
-    <!-- STATS -->
+    <!-- =================================================
+         STATS
+    ================================================== -->
 
     <section class="stats-row">
 
@@ -571,130 +600,81 @@
 
 
     <!-- =====================================================
-         SHOP / INVENTORY
+         INVENTORY FIRST
     ====================================================== -->
 
     <section class="market-area">
 
 
-      <!-- TWO BIG TABS -->
+      <!-- INVENTORY TAB -->
 
-      <div class="market-switch">
-
-
-        <!-- SHOP -->
-
-        <button
-          class="market-switch-btn active"
-          id="marketTabShop"
-        >
-
-          <div class="market-switch-icon">
-            🛒
-          </div>
-
-
-          <div class="market-switch-text">
-
-            <b>
-              МАГАЗИН
-            </b>
-
-            <small>
-              Купить питомца или зелье
-            </small>
-
-          </div>
-
-
-          <span class="market-switch-arrow">
-            →
-          </span>
-
-        </button>
-
-
-
-        <!-- INVENTORY -->
-
-        <button
-          class="market-switch-btn"
-          id="marketTabInventory"
-        >
-
-          <div class="market-switch-icon">
-            🎒
-          </div>
-
-
-          <div class="market-switch-text">
-
-            <b>
-              ИНВЕНТАРЬ
-            </b>
-
-            <small>
-              Твои купленные предметы
-            </small>
-
-          </div>
-
-
-          <span
-            class="market-switch-count"
-            id="inventoryCount"
-          >
-            0 предметов
-          </span>
-
-        </button>
-
-      </div>
-
-
-
-      <!-- SHOP PANEL -->
-
-      <div
-        class="market-panel"
-        id="shopPanel"
+      <button
+        class="section-switch active"
+        id="inventoryTab"
       >
 
-        <div class="market-panel-head">
+        <div class="section-switch-icon">
+          🎒
+        </div>
 
-          <div>
+        <div class="section-switch-text">
 
-            <span class="eyebrow">
-              MARKET
-            </span>
+          <b>
+            ИНВЕНТАРЬ
+          </b>
 
-            <h2>
-              МАГАЗИН ПИТОМЦЕВ
-            </h2>
-
-            <p>
-              Выбери предмет и купи его за ₽.
-            </p>
-
-          </div>
+          <small>
+            Твои купленные предметы
+          </small>
 
         </div>
 
+        <span
+          class="section-switch-count"
+          id="inventoryCount"
+        >
+          0 предметов
+        </span>
 
-        <div
-          class="item-grid"
-          id="itemGrid"
-        ></div>
-
-      </div>
+      </button>
 
 
+      <!-- SHOP TAB -->
 
-      <!-- INVENTORY PANEL -->
+      <button
+        class="section-switch"
+        id="shopTab"
+      >
+
+        <div class="section-switch-icon">
+          🛒
+        </div>
+
+        <div class="section-switch-text">
+
+          <b>
+            МАГАЗИН
+          </b>
+
+          <small>
+            Купить питомца или зелье
+          </small>
+
+        </div>
+
+        <span class="section-switch-arrow">
+          →
+        </span>
+
+      </button>
+
+
+
+      <!-- INVENTORY -->
 
       <div
-        class="market-panel hidden"
-        id="inventoryPanel"
+        class="section-content"
+        id="inventorySection"
       >
 
         <div class="market-panel-head">
@@ -710,8 +690,7 @@
             </h2>
 
             <p>
-              Нажми на питомца, чтобы выбрать его
-              для апгрейда.
+              Нажми на предмет, чтобы выбрать его для апгрейда.
             </p>
 
           </div>
@@ -727,8 +706,65 @@
       </div>
 
 
-    </section>
 
+      <!-- SHOP -->
+
+      <div
+        class="section-content hidden"
+        id="shopSection"
+      >
+
+        <div class="market-panel-head">
+
+          <div>
+
+            <span class="eyebrow">
+              MARKET
+            </span>
+
+            <h2>
+              МАГАЗИН
+            </h2>
+
+            <p>
+              Выбери питомца, свойства и купи его за ₽.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- SHOP CATEGORY -->
+
+        <div class="shop-category-tabs">
+
+          <button
+            class="shop-category-btn active"
+            data-shop-category="pet"
+          >
+            🐾 ПЕТЫ
+          </button>
+
+
+          <button
+            class="shop-category-btn"
+            data-shop-category="potion"
+          >
+            🧪 ЗЕЛЬЕ
+          </button>
+
+        </div>
+
+
+        <div
+          class="item-grid"
+          id="itemGrid"
+        ></div>
+
+      </div>
+
+    </section>
 
   </main>
 
@@ -739,8 +775,7 @@
   <footer>
 
     <span>
-      🎃 HAUNTED ADOPT
-      • HALLOWEEN UPGRADER
+      🎃 HAUNTED ADOPT • HALLOWEEN UPGRADER
     </span>
 
     <span>
@@ -809,15 +844,15 @@
       <div class="quick-deposit">
 
         <button data-add="5000">
-          + 5K ₽
+          + 5 000 ₽
         </button>
 
         <button data-add="10000">
-          + 10K ₽
+          + 10 000 ₽
         </button>
 
         <button data-add="50000">
-          + 50K ₽
+          + 50 000 ₽
         </button>
 
       </div>
@@ -857,7 +892,7 @@
 
 
   <!-- =====================================================
-       ROBUX MODAL
+       ROBUX
   ====================================================== -->
 
   <div
