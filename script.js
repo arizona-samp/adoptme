@@ -35,7 +35,7 @@ const ITEMS = {
       name:"Ghost Dog",
       rarity:"COMMON",
       price:82,
-      image:"images/ghost-dog.png",
+      image:""images/ghost-dog.png"",
       fallback:"🐶",
       halloween:false
     },
