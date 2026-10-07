@@ -60,7 +60,7 @@ const ITEMS = {
       name:"Kangaroo",
       rarity:"LEGENDARY",
       price:610,
-      image:"images/Kangaroo.png",
+      image:"images/kangaroo.png",
       fallback:"🎃",
       halloween:false
     },
