@@ -1,1 +1,745 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090b14">
+  <title>Adopt Me • Haunted Upgrader</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+<div class="scene-glow glow-left"></div>
+<div class="scene-glow glow-right"></div>
+<div class="moon"></div>
+<div class="fog fog-1"></div>
+<div class="fog fog-2"></div>
+<div class="stars" id="stars"></div>
+<div class="falling-decor" id="fallingDecor"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-emblem">🎃</div>
+    <div>
+      <div class="brand-title">HAUNTED ADOPT</div>
+      <div class="brand-subtitle">HALLOWEEN UPGRADER</div>
+    </div>
+  </div>
+
+  <div class="top-actions">
+    <button class="top-btn deposit-btn" id="depositButton">
+      <span class="btn-icon">+</span>
+      <span>
+        <b>ПОПОЛНИТЬ</b>
+        <small>баланс</small>
+      </span>
+    </button>
+
+    <button class="top-btn robux-btn" id="robuxButton">
+      <span class="robux-icon">R$</span>
+      <span>
+        <b>КУПИТЬ ROBUX</b>
+        <small>магазин</small>
+      </span>
+    </button>
+
+    <div class="balance-chip">
+      <small>БАЛАНС</small>
+      <strong id="balanceValue">0 ₽</strong>
+    </div>
+  </div>
+</header>
+
+<main class="page">
+
+  <section class="hero">
+    <div class="hero-kicker">🕸️ SPOOKY SEASON • LIMITED EVENT</div>
+
+    <h1>
+      ЗАБЕРИ <span>ЛУЧШЕГО</span> ПИТОМЦА
+    </h1>
+
+    <p>
+      Меняй петов и зелья на более редкие предметы —
+      в новом Halloween-апгрейдере.
+    </p>
+  </section>
+
+  <section class="mode-bar">
+
+    <div class="mode-copy">
+      <span class="eyebrow">РЕЖИМ</span>
+
+      <b id="modeLabel">ПЕТЫ</b>
+
+      <small>
+        Выбирай свою категорию перед апгрейдом
+      </small>
+    </div>
+
+    <div class="mode-switch">
+
+      <button class="mode-btn active" data-category="pet">
+        <span>🐾</span>
+        ПЕТЫ
+      </button>
+
+      <button class="mode-btn" data-category="potion">
+        <span>🧪</span>
+        ЗЕЛЬЕ
+      </button>
+
+    </div>
+
+  </section>
+
+  <section class="forge-card">
+
+    <div class="forge-head">
+
+      <div>
+        <span class="eyebrow">HAUNTED FORGE</span>
+        <h2>АПГРЕЙД</h2>
+      </div>
+
+      <div class="fair-badge">
+        ✓ ЧЕСТНЫЙ ШАНС
+      </div>
+
+    </div>
+
+    <div class="forge-layout">
+
+      <section class="item-panel">
+
+        <div class="panel-label">
+          <span>ВАШ ПРЕДМЕТ</span>
+
+          <button id="sourceButton">
+            ИЗМЕНИТЬ
+          </button>
+        </div>
+
+        <button class="item-showcase" id="sourceCard">
+
+          <div class="item-art">
+
+            <img id="sourceImage" src="" alt="">
+
+            <span id="sourceFallback">
+              🐶
+            </span>
+
+          </div>
+
+          <div class="item-details">
+
+            <b id="sourceName">
+              Dog
+            </b>
+
+            <span id="sourceMeta">
+              COMMON • FR
+            </span>
+
+            <strong id="sourcePrice">
+              100 ₽
+            </strong>
+
+          </div>
+
+          <span class="item-arrow">
+            ↗
+          </span>
+
+        </button>
+
+        <div class="chance-block">
+
+          <div class="chance-title">
+            ШАНС АПГРЕЙДА
+          </div>
+
+          <div class="chance-row">
+
+            <button class="chance-btn" data-chance="5">
+              5%
+            </button>
+
+            <button class="chance-btn" data-chance="15">
+              15%
+            </button>
+
+            <button class="chance-btn" data-chance="30">
+              30%
+            </button>
+
+            <button class="chance-btn active" data-chance="50">
+              50%
+            </button>
+
+            <button class="chance-btn" data-chance="75">
+              75%
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <section class="forge-center">
+
+        <div class="forging-rune">
+          ✦
+        </div>
+
+        <div class="multiplier" id="multiplier">
+          x1.96
+        </div>
+
+        <div class="chance-big" id="chanceText">
+          Шанс 50.0%
+        </div>
+
+        <button class="spin-btn" id="upgradeButton">
+
+          <span>
+            КРУТИТЬ
+          </span>
+
+          <b>
+            →
+          </b>
+
+        </button>
+
+        <small>
+          Результат выбирается до запуска рулетки
+        </small>
+
+      </section>
+
+      <section class="item-panel">
+
+        <div class="panel-label">
+
+          <span>
+            ЦЕЛЬ
+          </span>
+
+          <button id="targetButton">
+            ИЗМЕНИТЬ
+          </button>
+
+        </div>
+
+        <button class="item-showcase target-showcase" id="targetCard">
+
+          <div class="item-art target-art">
+
+            <img id="targetImage" src="" alt="">
+
+            <span id="targetFallback">
+              🦄
+            </span>
+
+          </div>
+
+          <div class="item-details">
+
+            <b id="targetName">
+              Unicorn
+            </b>
+
+            <span id="targetMeta">
+              LEGENDARY • FR
+            </span>
+
+            <strong id="targetPrice">
+              1 960 ₽
+            </strong>
+
+          </div>
+
+          <span class="item-arrow">
+            ↗
+          </span>
+
+        </button>
+
+        <div class="halloween-mini-card">
+
+          <span>
+            🎃
+          </span>
+
+          <div>
+
+            <b>
+              HALLOWEEN DROP
+            </b>
+
+            <small>
+              Лимитированные предметы события
+            </small>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </section>
+
+  <section class="stats-row">
+
+    <div class="stat-card">
+      <span>ПОПЫТКИ</span>
+      <b id="attempts">0</b>
+    </div>
+
+    <div class="stat-card">
+      <span>ВЫИГРЫШЕЙ</span>
+      <b id="wins">0</b>
+    </div>
+
+    <div class="stat-card">
+      <span>ПРОИГРЫШЕЙ</span>
+      <b id="losses">0</b>
+    </div>
+
+    <div class="stat-card">
+      <span>WINRATE</span>
+      <b id="winrate">0%</b>
+    </div>
+
+  </section>
+
+  <section class="collection">
+
+    <div class="collection-head">
+
+      <div>
+
+        <span class="eyebrow">
+          MARKET
+        </span>
+
+        <h2>
+          МАГАЗИН ПИТОМЦЕВ
+        </h2>
+
+        <p>
+          Купи предмет за ₽, затем используй его в апгрейдере.
+        </p>
+
+      </div>
+
+      <button class="market-open-btn" id="storeButton">
+        🛒 МАГАЗИН
+      </button>
+
+    </div>
+
+    <div class="item-grid" id="itemGrid"></div>
+
+  </section>
+
+  <section class="inventory-section">
+
+    <div class="inventory-head">
+
+      <div>
+
+        <span class="eyebrow">
+          YOUR ITEMS
+        </span>
+
+        <h2>
+          ИНВЕНТАРЬ
+        </h2>
+
+        <p>
+          Купленные предметы находятся здесь.
+          Апгрейд использует сами предметы, а не деньги.
+        </p>
+
+      </div>
+
+      <div class="inventory-actions">
+
+        <span class="count-pill" id="inventoryCount">
+          0 предметов
+        </span>
+
+        <button class="market-open-btn" id="inventoryShopButton">
+          🛒 МАГАЗИН
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="inventory-grid" id="inventoryGrid"></div>
+
+  </section>
+
+</main>
+
+<footer>
+
+  <span>
+    🎃 HAUNTED ADOPT • HALLOWEEN UPGRADER
+  </span>
+
+  <span>
+    DEMO INTERFACE
+  </span>
+
+</footer>
+
+<!-- ПОПОЛНЕНИЕ -->
+
+<div class="modal hidden" id="depositModal">
+
+  <div class="modal-overlay" data-close="depositModal"></div>
+
+  <div class="modal-window small-modal">
+
+    <div class="modal-head">
+
+      <div>
+
+        <span class="eyebrow">
+          BALANCE
+        </span>
+
+        <h3>
+          ПОПОЛНЕНИЕ СЧЕТА
+        </h3>
+
+      </div>
+
+      <button class="close-btn" data-close="depositModal">
+        ×
+      </button>
+
+    </div>
+
+    <div class="balance-preview">
+
+      <span>
+        Текущий баланс
+      </span>
+
+      <strong id="depositBalance">
+        0 ₽
+      </strong>
+
+    </div>
+
+    <div class="quick-deposit">
+
+      <button data-add="5000">
+        + 5K ₽
+      </button>
+
+      <button data-add="10000">
+        + 10K ₽
+      </button>
+
+      <button data-add="50000">
+        + 50K ₽
+      </button>
+
+    </div>
+
+    <label class="input-label">
+      ИЛИ ВВЕДИ СВОЮ СУММУ
+    </label>
+
+    <div class="deposit-row">
+
+      <input
+        id="depositAmount"
+        type="number"
+        min="1"
+        placeholder="Например, 100000"
+      >
+
+      <button id="depositSubmit">
+        ПОПОЛНИТЬ
+      </button>
+
+    </div>
+
+    <p class="demo-note">
+      Демо-пополнение для тестирования апгрейдера.
+      После обновления страницы баланс снова 0.
+    </p>
+
+  </div>
+
+</div>
+
+<!-- ROBUX -->
+
+<div class="modal hidden" id="robuxModal">
+
+  <div class="modal-overlay" data-close="robuxModal"></div>
+
+  <div class="modal-window small-modal">
+
+    <div class="modal-head">
+
+      <div>
+
+        <span class="eyebrow">
+          MARKET
+        </span>
+
+        <h3>
+          КУПИТЬ ROBUX
+        </h3>
+
+      </div>
+
+      <button class="close-btn" data-close="robuxModal">
+        ×
+      </button>
+
+    </div>
+
+    <div class="rates">
+
+      <div>
+        <span>RUB</span>
+        <b>1 R$ — 1.05 ₽</b>
+      </div>
+
+      <div>
+        <span>UAH</span>
+        <b>1 R$ — 0.55 грн</b>
+      </div>
+
+    </div>
+
+    <div class="currency-buttons">
+
+      <button id="rubButton">
+
+        <strong>₽</strong>
+
+        КУПИТЬ ЗА RUB
+
+        <small>
+          российский рубль
+        </small>
+
+      </button>
+
+      <button id="uahButton">
+
+        <strong>₴</strong>
+
+        КУПИТЬ ЗА ГРН
+
+        <small>
+          украинская гривна
+        </small>
+
+      </button>
+
+    </div>
+
+    <div class="maintenance">
+
+      <span>
+        🛠️
+      </span>
+
+      <div>
+
+        <b>
+          Технические работы
+        </b>
+
+        <p>
+          Покупка будет доступна совсем скоро.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- МАГАЗИН -->
+
+<div class="modal hidden" id="storeModal">
+
+  <div class="modal-overlay" data-close="storeModal"></div>
+
+  <div class="modal-window store-window">
+
+    <div class="modal-head">
+
+      <div>
+
+        <span class="eyebrow">
+          MARKET
+        </span>
+
+        <h3>
+          МАГАЗИН ПРЕДМЕТОВ
+        </h3>
+
+      </div>
+
+      <button class="close-btn" data-close="storeModal">
+        ×
+      </button>
+
+    </div>
+
+    <div class="store-balance">
+
+      <span>
+        Доступно
+      </span>
+
+      <strong id="storeBalance">
+        0 ₽
+      </strong>
+
+    </div>
+
+    <div class="store-tabs">
+
+      <button
+        class="store-tab active"
+        data-store-category="pet"
+      >
+        🐾 ПЕТЫ
+      </button>
+
+      <button
+        class="store-tab"
+        data-store-category="potion"
+      >
+        🧪 ЗЕЛЬЕ
+      </button>
+
+    </div>
+
+    <input
+      class="search-input"
+      id="storeSearch"
+      type="text"
+      placeholder="Поиск предмета..."
+    >
+
+    <div class="store-list" id="storeList"></div>
+
+  </div>
+
+</div>
+
+<!-- ВЫБОР ПРЕДМЕТА -->
+
+<div class="modal hidden" id="selectionModal">
+
+  <div class="modal-overlay" data-close="selectionModal"></div>
+
+  <div class="modal-window selection-window">
+
+    <div class="modal-head">
+
+      <div>
+
+        <span class="eyebrow">
+          ITEM SELECT
+        </span>
+
+        <h3 id="selectionTitle">
+          ВЫБЕРИ ПРЕДМЕТ
+        </h3>
+
+      </div>
+
+      <button class="close-btn" data-close="selectionModal">
+        ×
+      </button>
+
+    </div>
+
+    <input
+      class="search-input"
+      id="itemSearch"
+      type="text"
+      placeholder="Поиск питомца или зелья..."
+    >
+
+    <div class="selection-list" id="selectionList"></div>
+
+  </div>
+
+</div>
+
+<!-- ROLL -->
+
+<div class="roll-screen hidden" id="rollScreen">
+
+  <div class="roll-title">
+    🎃 ПРОВЕРКА УДАЧИ
+  </div>
+
+  <div class="roll-window">
+
+    <div class="roll-track" id="rollTrack"></div>
+
+    <div class="roll-pointer"></div>
+
+  </div>
+
+  <div class="roll-caption">
+    DON'T LOOK AWAY
+  </div>
+
+</div>
+
+<!-- RESULT -->
+
+<div class="result-screen hidden" id="resultScreen">
+
+  <div class="result-card">
+
+    <div class="result-emoji" id="resultEmoji">
+      🎃
+    </div>
+
+    <div class="result-title" id="resultTitle">
+      ВЫИГРЫШ
+    </div>
+
+    <div class="result-info" id="resultInfo"></div>
+
+    <button class="spin-btn result-btn" id="closeResult">
+      ПРОДОЛЖИТЬ
+    </button>
+
+  </div>
+
+</div>
+
+<div class="toast hidden" id="toast"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
