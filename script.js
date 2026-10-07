@@ -56,7 +56,7 @@ const ITEMS = {
     },
 
     {
-      id:"Kangaroo",
+      id:"kangaroo",
       name:"kangaroo",
       rarity:"LEGENDARY",
       price:610,
