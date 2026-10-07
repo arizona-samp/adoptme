@@ -1,29 +1,12 @@
 /*
-  ==========================================================
-  ADOPT ME HALLOWEEN UPGRADER
-  ==========================================================
+  ADOPT ME • HAUNTED UPGRADER
 
-  ВАЖНО:
-  Все питомцы и зелья находятся в массиве ITEMS ниже.
+  Редактируй предметы только здесь:
 
-  Чтобы добавить свою картинку и свою цену,
-  меняй только:
-
+    price: 5000,
     image: "images/my-pet.png"
-    price: 1250
 
-  Примеры путей:
-
-    "images/dog.png"
-    "images/unicorn.webp"
-    "https://site.com/pet.png"
-
-  Для GitHub Pages удобнее всего:
-
-    1. создать папку images
-    2. загрузить туда свои картинки
-    3. в image указать:
-       "images/filename.png"
+  Картинки можно положить в папку images.
 */
 
 
@@ -32,133 +15,133 @@ const ITEMS = {
   pet: [
 
     {
-      id: "dog",
-      name: "Dog",
-      rarity: "COMMON",
-      price: 100,
-      image: "images/pet-dog.png",
-      fallback: "🐶",
-      halloween: false
+      id:"dog",
+      name:"Dog",
+      rarity:"COMMON",
+      price:100,
+      image:"images/pet-dog.png",
+      fallback:"🐶",
+      halloween:false
     },
 
     {
-      id: "cat",
-      name: "Cat",
-      rarity: "COMMON",
-      price: 120,
-      image: "images/pet-cat.png",
-      fallback: "🐱",
-      halloween: false
+      id:"cat",
+      name:"Cat",
+      rarity:"COMMON",
+      price:120,
+      image:"images/pet-cat.png",
+      fallback:"🐱",
+      halloween:false
     },
 
     {
-      id: "bunny",
-      name: "Bunny",
-      rarity: "UNCOMMON",
-      price: 220,
-      image: "images/pet-bunny.png",
-      fallback: "🐰",
-      halloween: false
+      id:"bunny",
+      name:"Bunny",
+      rarity:"UNCOMMON",
+      price:220,
+      image:"images/pet-bunny.png",
+      fallback:"🐰",
+      halloween:false
     },
 
     {
-      id: "red-panda",
-      name: "Red Panda",
-      rarity: "ULTRA-RARE",
-      price: 480,
-      image: "images/pet-red-panda.png",
-      fallback: "🦊",
-      halloween: false
+      id:"red-panda",
+      name:"Red Panda",
+      rarity:"ULTRA-RARE",
+      price:480,
+      image:"images/pet-red-panda.png",
+      fallback:"🦊",
+      halloween:false
     },
 
     {
-      id: "penguin",
-      name: "Penguin",
-      rarity: "ULTRA-RARE",
-      price: 550,
-      image: "images/pet-penguin.png",
-      fallback: "🐧",
-      halloween: false
+      id:"penguin",
+      name:"Penguin",
+      rarity:"ULTRA-RARE",
+      price:550,
+      image:"images/pet-penguin.png",
+      fallback:"🐧",
+      halloween:false
     },
 
     {
-      id: "unicorn",
-      name: "Unicorn",
-      rarity: "LEGENDARY",
-      price: 1960,
-      image: "images/pet-unicorn.png",
-      fallback: "🦄",
-      halloween: false
+      id:"dragon",
+      name:"Dragon",
+      rarity:"LEGENDARY",
+      price:620,
+      image:"images/pet-dragon.png",
+      fallback:"🐲",
+      halloween:false
     },
 
     {
-      id: "dragon",
-      name: "Dragon",
-      rarity: "LEGENDARY",
-      price: 620,
-      image: "images/pet-dragon.png",
-      fallback: "🐲",
-      halloween: false
+      id:"turtle",
+      name:"Turtle",
+      rarity:"LEGENDARY",
+      price:1100,
+      image:"images/pet-turtle.png",
+      fallback:"🐢",
+      halloween:false
     },
 
     {
-      id: "turtle",
-      name: "Turtle",
-      rarity: "LEGENDARY",
-      price: 1100,
-      image: "images/pet-turtle.png",
-      fallback: "🐢",
-      halloween: false
+      id:"ghost-dragon",
+      name:"Ghost Dragon",
+      rarity:"LEGENDARY",
+      price:1800,
+      image:"images/pet-ghost-dragon.png",
+      fallback:"🐉",
+      halloween:true
     },
 
     {
-      id: "ghost-dragon",
-      name: "Ghost Dragon",
-      rarity: "LEGENDARY",
-      price: 1800,
-      image: "images/pet-ghost-dragon.png",
-      fallback: "🐉",
-      halloween: true
+      id:"unicorn",
+      name:"Unicorn",
+      rarity:"LEGENDARY",
+      price:1960,
+      image:"images/pet-unicorn.png",
+      fallback:"🦄",
+      halloween:false
     },
 
     {
-      id: "scarecrow-cat",
-      name: "Scarecrow Cat",
-      rarity: "ULTRA-RARE",
-      price: 950,
-      image: "images/pet-scarecrow-cat.png",
-      fallback: "🎃",
-      halloween: true
+      id:"scarecrow-cat",
+      name:"Scarecrow Cat",
+      rarity:"ULTRA-RARE",
+      price:950,
+      image:"images/pet-scarecrow-cat.png",
+      fallback:"🎃",
+      halloween:true
     },
 
     {
-      id: "werewolf",
-      name: "Werewolf",
-      rarity: "ULTRA-RARE",
-      price: 1250,
-      image: "images/pet-werewolf.png",
-      fallback: "🐺",
-      halloween: true
+      id:"werewolf",
+      name:"Werewolf",
+      rarity:"ULTRA-RARE",
+      price:1250,
+      image:"images/pet-werewolf.png",
+      fallback:"🐺",
+      halloween:true
     },
 
     {
-      id: "bat-dragon",
-      name: "Bat Dragon",
-      rarity: "LEGENDARY",
-      price: 3000,
-      image: "images/pet-bat-dragon.png",
-      fallback: "🦇",
-      halloween: true
+      id:"bat-dragon",
+      name:"Bat Dragon",
+      rarity:"LEGENDARY",
+      price:3000,
+      image:"images/pet-bat-dragon.png",
+      fallback:"🦇",
+      halloween:true
     },
 
     {
-      id: "evil-chick",
-      name: "Evil Chick",
-      rarity: "LEGENDARY",
-      price: 900,
-      image: "images/pet-evil-chick.png",
-      fallback: "🐣",
-      halloween: true
+      id:"evil-chick",
+      name:"Evil Chick",
+      rarity:"LEGENDARY",
+      price:900,
+      image:"images/pet-evil-chick.png",
+      fallback:"🐣",
+      halloween:true
     }
 
   ],
@@ -167,53 +150,53 @@ const ITEMS = {
   potion: [
 
     {
-      id: "ride-potion",
-      name: "Ride Potion",
-      rarity: "POTION",
-      price: 350,
-      image: "images/potion-ride.png",
-      fallback: "🧪",
-      halloween: false
+      id:"ride-potion",
+      name:"Ride Potion",
+      rarity:"POTION",
+      price:350,
+      image:"images/potion-ride.png",
+      fallback:"🧪",
+      halloween:false
     },
 
     {
-      id: "fly-potion",
-      name: "Fly Potion",
-      rarity: "POTION",
-      price: 620,
-      image: "images/potion-fly.png",
-      fallback: "🧪",
-      halloween: false
+      id:"fly-potion",
+      name:"Fly Potion",
+      rarity:"POTION",
+      price:620,
+      image:"images/potion-fly.png",
+      fallback:"🧪",
+      halloween:false
     },
 
     {
-      id: "speed-potion",
-      name: "Speed Potion",
-      rarity: "POTION",
-      price: 180,
-      image: "images/potion-speed.png",
-      fallback: "⚡",
-      halloween: false
+      id:"speed-potion",
+      name:"Speed Potion",
+      rarity:"POTION",
+      price:180,
+      image:"images/potion-speed.png",
+      fallback:"⚡",
+      halloween:false
     },
 
     {
-      id: "halloween-potion",
-      name: "Halloween Potion",
-      rarity: "LIMITED",
-      price: 800,
-      image: "images/potion-halloween.png",
-      fallback: "🎃",
-      halloween: true
+      id:"halloween-potion",
+      name:"Halloween Potion",
+      rarity:"LIMITED",
+      price:800,
+      image:"images/potion-halloween.png",
+      fallback:"🎃",
+      halloween:true
     },
 
     {
-      id: "shadow-potion",
-      name: "Shadow Potion",
-      rarity: "LIMITED",
-      price: 1250,
-      image: "images/potion-shadow.png",
-      fallback: "🖤",
-      halloween: true
+      id:"shadow-potion",
+      name:"Shadow Potion",
+      rarity:"LIMITED",
+      price:1250,
+      image:"images/potion-shadow.png",
+      fallback:"🖤",
+      halloween:true
     }
 
   ]
@@ -221,11 +204,22 @@ const ITEMS = {
 };
 
 
-/* ==========================================================
-   STATE
-========================================================== */
+const FAIR_POOL_SIZE = 200;
+
+const fairPools = new Map();
+
 
 let category = "pet";
+
+let source = {
+  ...ITEMS.pet[0]
+};
+
+let target = {
+  ...ITEMS.pet.find(
+    x => x.id === "unicorn"
+  )
+};
 
 let balance = 0;
 
@@ -237,22 +231,9 @@ let losses = 0;
 
 let selectedChance = 50;
 
-let rolling = false;
-
 let selectionMode = "source";
 
-
-let source = {
-  ...ITEMS.pet[0]
-};
-
-
-let target = {
-  ...ITEMS.pet.find(
-    item =>
-      item.id === "unicorn"
-  )
-};
+let rolling = false;
 
 
 const $ =
@@ -264,19 +245,37 @@ const $ =
    HELPERS
 ========================================================== */
 
-function money(value) {
+function money(value){
 
-  return Math.round(
+  return `${Math.round(
     Number(value) || 0
   )
     .toLocaleString("ru-RU")
-    .replace(/\u00A0/g, " ")
-    + " 🐾";
+    .replace(/\u00A0/g," ")} 🎃`;
 
 }
 
 
-function multiplier() {
+function allItems(){
+
+  return [
+    ...ITEMS.pet,
+    ...ITEMS.potion
+  ];
+
+}
+
+
+function currentItems(){
+
+  return ITEMS[
+    category
+  ];
+
+}
+
+
+function multiplier(){
 
   return source.price > 0
     ? target.price /
@@ -286,7 +285,7 @@ function multiplier() {
 }
 
 
-function chanceFromMultiplier() {
+function displayedChance(){
 
   return Math.max(
     1,
@@ -300,90 +299,100 @@ function chanceFromMultiplier() {
 }
 
 
-function showToast(message) {
+function toast(message){
 
-  $("toast").textContent =
+  const node =
+    $("toast");
+
+
+  node.textContent =
     message;
 
-  $("toast")
-    .classList
+
+  node.classList
     .remove("hidden");
 
-  $("toast")
-    .classList
+  node.classList
     .add("show");
 
 
-  window.clearTimeout(
-    showToast.timer
+  clearTimeout(
+    toast.timer
   );
 
 
-  showToast.timer =
-    window.setTimeout(
+  toast.timer =
+    setTimeout(
       () => {
 
-        $("toast")
-          .classList
+        node.classList
           .add("hidden");
 
-        $("toast")
-          .classList
+        node.classList
           .remove("show");
 
       },
-      2500
+      2400
     );
 
 }
 
 
-function openModal(id) {
+function updateBalance(){
 
-  $(id)
-    .classList
-    .remove("hidden");
-
-}
+  $("balanceValue")
+    .textContent =
+    money(balance);
 
 
-function closeModal(id) {
-
-  $(id)
-    .classList
-    .add("hidden");
+  $("depositBalance")
+    .textContent =
+    money(balance);
 
 }
 
 
-function allItems() {
+function updateStats(){
 
-  return [
-    ...ITEMS.pet,
-    ...ITEMS.potion
-  ];
-
-}
+  $("attempts")
+    .textContent =
+    attempts;
 
 
-function currentItems() {
+  $("wins")
+    .textContent =
+    wins;
 
-  return ITEMS[
-    category
-  ];
+
+  $("losses")
+    .textContent =
+    losses;
+
+
+  $("winrate")
+    .textContent =
+    `${
+      attempts
+        ? Math.round(
+            wins /
+            attempts *
+            100
+          )
+        : 0
+    }%`;
 
 }
 
 
 /* ==========================================================
-   IMAGE HELPER
+   IMAGE
 ========================================================== */
 
 function bindImage(
   imgId,
   fallbackId,
   item
-) {
+){
 
   const img =
     $(imgId);
@@ -392,21 +401,24 @@ function bindImage(
     $(fallbackId);
 
 
-  img.src =
-    item.image || "";
+  img.style.display =
+    "none";
+
+  fallback.style.display =
+    "block";
 
 
   fallback.textContent =
-    item.fallback || "🐾";
+    item.fallback ||
+    "🐾";
 
 
-  if (!item.image) {
+  img.src =
+    item.image ||
+    "";
 
-    img.style.display =
-      "none";
 
-    fallback.style.display =
-      "grid";
+  if(!item.image){
 
     return;
 
@@ -432,7 +444,7 @@ function bindImage(
         "none";
 
       fallback.style.display =
-        "grid";
+        "block";
 
     };
 
@@ -440,10 +452,10 @@ function bindImage(
 
 
 /* ==========================================================
-   UI UPDATE
+   CARDS
 ========================================================== */
 
-function updateCards() {
+function updateCards(){
 
   bindImage(
     "sourceImage",
@@ -459,36 +471,48 @@ function updateCards() {
   );
 
 
-  $("sourceName").textContent =
+  $("sourceName")
+    .textContent =
     source.name;
 
 
-  $("sourceMeta").textContent =
+  $("sourceMeta")
+    .textContent =
     `${source.rarity} • FR`;
 
 
-  $("sourcePrice").textContent =
-    money(source.price);
+  $("sourcePrice")
+    .textContent =
+    money(
+      source.price
+    );
 
 
-  $("targetName").textContent =
+  $("targetName")
+    .textContent =
     target.name;
 
 
-  $("targetMeta").textContent =
+  $("targetMeta")
+    .textContent =
     `${target.rarity} • FR`;
 
 
-  $("targetPrice").textContent =
-    money(target.price);
+  $("targetPrice")
+    .textContent =
+    money(
+      target.price
+    );
 
 
-  $("multiplier").textContent =
+  $("multiplier")
+    .textContent =
     `x${multiplier().toFixed(2)}`;
 
 
-  $("chanceText").textContent =
-    `Шанс ${chanceFromMultiplier().toFixed(1)}%`;
+  $("chanceText")
+    .textContent =
+    `Шанс ${displayedChance().toFixed(1)}%`;
 
 
   document
@@ -512,34 +536,184 @@ function updateCards() {
 }
 
 
-function updateStats() {
+function openModal(id){
 
-  $("balanceValue").textContent =
-    money(balance);
+  $(id)
+    .classList
+    .remove("hidden");
 
-
-  $("attempts").textContent =
-    attempts;
-
-
-  $("wins").textContent =
-    wins;
+}
 
 
-  $("losses").textContent =
-    losses;
+function closeModal(id){
+
+  $(id)
+    .classList
+    .add("hidden");
+
+}
 
 
-  $("winrate").textContent =
-    `${
-      attempts
-        ? Math.round(
-            wins /
-            attempts *
-            100
+/* ==========================================================
+   ЧЕСТНЫЙ ПУЛ
+========================================================== */
+
+function buildFairPool(
+  chance
+){
+
+  const winsNeeded =
+    Math.round(
+      chance *
+      FAIR_POOL_SIZE /
+      100
+    );
+
+
+  const pool = [];
+
+
+  for(
+    let i = 0;
+    i < winsNeeded;
+    i++
+  ){
+
+    pool.push(true);
+
+  }
+
+
+  for(
+    let i = winsNeeded;
+    i < FAIR_POOL_SIZE;
+    i++
+  ){
+
+    pool.push(false);
+
+  }
+
+
+  for(
+    let i = pool.length - 1;
+    i > 0;
+    i--
+  ){
+
+    const j =
+      Math.floor(
+        Math.random() *
+        (i + 1)
+      );
+
+
+    [
+      pool[i],
+      pool[j]
+    ] = [
+      pool[j],
+      pool[i]
+    ];
+
+  }
+
+
+  return pool;
+
+}
+
+
+function fairOutcome(
+  chance
+){
+
+  const key =
+    Number(chance)
+      .toFixed(1);
+
+
+  if(
+    !fairPools.has(key) ||
+    fairPools.get(key).length === 0
+  ){
+
+    fairPools.set(
+      key,
+      buildFairPool(
+        chance
+      )
+    );
+
+  }
+
+
+  return fairPools
+    .get(key)
+    .pop();
+
+}
+
+
+/* ==========================================================
+   ШАНС
+========================================================== */
+
+function applyChance(
+  chance
+){
+
+  selectedChance =
+    chance;
+
+
+  const wanted =
+    source.price *
+    (
+      98 /
+      chance
+    );
+
+
+  const list =
+    currentItems()
+      .filter(
+        item =>
+          item.id !==
+            source.id &&
+          item.price >=
+            source.price
+      );
+
+
+  const best =
+    [
+      ...list
+    ]
+      .sort(
+        (
+          a,
+          b
+        ) =>
+          Math.abs(
+            a.price -
+            wanted
+          ) -
+          Math.abs(
+            b.price -
+            wanted
           )
-        : 0
-    }%`;
+      )[0] ||
+      currentItems()[0];
+
+
+  target =
+    {
+      ...best
+    };
+
+
+  updateCards();
 
 }
 
@@ -550,7 +724,7 @@ function updateStats() {
 
 document
   .querySelectorAll(
-    ".category-tab"
+    ".mode-btn"
   )
   .forEach(
     button => {
@@ -559,8 +733,10 @@ document
         "click",
         () => {
 
-          if (rolling) {
+          if(rolling){
+
             return;
+
           }
 
 
@@ -570,52 +746,47 @@ document
 
           document
             .querySelectorAll(
-              ".category-tab"
+              ".mode-btn"
             )
             .forEach(
-              tab => {
-
-                tab.classList.toggle(
+              x =>
+                x.classList.toggle(
                   "active",
-                  tab === button
-                );
-
-              }
+                  x === button
+                )
             );
+
+
+          $("modeLabel")
+            .textContent =
+              category === "pet"
+                ? "ПЕТЫ"
+                : "ЗЕЛЬЕ";
 
 
           source =
             {
-              ...ITEMS[
-                category
-              ][0]
+              ...currentItems()[0]
             };
 
 
-          const bestTarget =
-            ITEMS[
-              category
-            ].find(
-              item =>
-                item.price >
+          const next =
+            currentItems().find(
+              x =>
+                x.price >
                 source.price
-            );
+            ) ||
+            currentItems()[0];
 
 
           target =
             {
-              ...(bestTarget ||
-                ITEMS[
-                  category
-                ][0])
+              ...next
             };
 
 
           selectedChance =
             50;
-
-
-          applyChance(50);
 
 
           renderCollection();
@@ -630,109 +801,8 @@ document
 
 
 /* ==========================================================
-   CHANCE
+   CHANCE BUTTONS
 ========================================================== */
-
-function applyChance(
-  chance
-) {
-
-  selectedChance =
-    chance;
-
-
-  const targetPrice =
-    Math.max(
-      1,
-      source.price *
-      (
-        98 /
-        chance
-      )
-    );
-
-
-  const sameCategory =
-    currentItems();
-
-
-  let matchingTarget =
-    sameCategory.find(
-      item => {
-
-        return (
-          Math.abs(
-            item.price -
-            targetPrice
-          ) /
-          Math.max(
-            targetPrice,
-            1
-          ) <
-          0.1
-        ) &&
-        item.id !==
-        source.id;
-
-      }
-    );
-
-
-  if (!matchingTarget) {
-
-    const higher =
-      sameCategory
-        .filter(
-          item =>
-            item.price >
-              source.price &&
-            item.id !==
-              source.id
-        )
-        .sort(
-          (
-            a,
-            b
-          ) =>
-            a.price -
-            b.price
-        );
-
-
-    matchingTarget =
-      higher[0] ||
-      sameCategory[0];
-
-  }
-
-
-  if (matchingTarget) {
-
-    target =
-      {
-        ...matchingTarget
-      };
-
-  } else {
-
-    target =
-      {
-        ...target,
-        price:
-          Math.round(
-            targetPrice
-          ),
-        name:
-          `${source.name} Upgrade`
-      };
-
-  }
-
-
-  updateCards();
-
-}
-
 
 document
   .querySelectorAll(
@@ -759,12 +829,12 @@ document
 
 
 /* ==========================================================
-   SELECTION MODAL
+   SELECTION
 ========================================================== */
 
 function openSelection(
   mode
-) {
+){
 
   selectionMode =
     mode;
@@ -773,15 +843,16 @@ function openSelection(
   $("selectionTitle")
     .textContent =
       mode === "source"
-        ? "ВЫБЕРИТЕ СТАВКУ"
-        : "ВЫБЕРИТЕ ЦЕЛЬ";
+        ? "ВЫБЕРИ ПРЕДМЕТ"
+        : "ВЫБЕРИ ЦЕЛЬ";
 
 
-  $("itemSearch").value =
+  $("itemSearch")
+    .value =
     "";
 
 
-  renderSelectionList();
+  renderSelection();
 
 
   openModal(
@@ -791,18 +862,18 @@ function openSelection(
 }
 
 
-function renderSelectionList(
+function renderSelection(
   query = ""
-) {
-
-  const list =
-    $("selectionList");
-
+){
 
   const q =
     query
       .trim()
       .toLowerCase();
+
+
+  const list =
+    $("selectionList");
 
 
   list.innerHTML =
@@ -825,12 +896,12 @@ function renderSelectionList(
           );
 
 
-        row.className =
-          "selection-item";
-
-
         row.type =
           "button";
+
+
+        row.className =
+          "selection-row";
 
 
         row.innerHTML = `
@@ -838,13 +909,13 @@ function renderSelectionList(
 
             <img alt="">
 
-            <span class="selection-fallback">
+            <span>
               ${item.fallback || "🐾"}
             </span>
 
           </div>
 
-          <div class="selection-copy">
+          <div class="selection-details">
 
             <b>
               ${item.name}
@@ -864,10 +935,9 @@ function renderSelectionList(
 
           </div>
 
-          <span class="item-kind">
+          <span class="selection-type">
             ${
-              category ===
-              "pet"
+              category === "pet"
                 ? "PET"
                 : "POTION"
             }
@@ -883,11 +953,11 @@ function renderSelectionList(
 
         const fallback =
           row.querySelector(
-            ".selection-fallback"
+            ".selection-art span"
           );
 
 
-        if (item.image) {
+        if(item.image){
 
           img.src =
             item.image;
@@ -911,17 +981,17 @@ function renderSelectionList(
           "click",
           () => {
 
-            if (
+            if(
               selectionMode ===
               "source"
-            ) {
+            ){
 
               source =
                 {
                   ...item
                 };
 
-            } else {
+            }else{
 
               target =
                 {
@@ -931,12 +1001,12 @@ function renderSelectionList(
             }
 
 
+            updateCards();
+
+
             closeModal(
               "selectionModal"
             );
-
-
-            updateCards();
 
           }
         );
@@ -975,13 +1045,10 @@ $("targetButton")
 $("itemSearch")
   .addEventListener(
     "input",
-    event => {
-
-      renderSelectionList(
+    event =>
+      renderSelection(
         event.target.value
-      );
-
-    }
+      )
   );
 
 
@@ -994,13 +1061,10 @@ document
 
       button.addEventListener(
         "click",
-        () => {
-
+        () =>
           closeModal(
             button.dataset.close
-          );
-
-        }
+          )
       );
 
     }
@@ -1011,7 +1075,7 @@ document
    COLLECTION
 ========================================================== */
 
-function renderCollection() {
+function renderCollection(){
 
   const grid =
     $("itemGrid");
@@ -1050,15 +1114,15 @@ function renderCollection() {
       card.innerHTML = `
         ${
           item.halloween
-            ? '<span class="halloween-tag">🎃 EVENT</span>'
+            ? '<span class="event-tag">🎃 EVENT</span>'
             : ""
         }
 
-        <div class="grid-item-img">
+        <div class="grid-item-art">
 
           <img alt="">
 
-          <span class="grid-fallback">
+          <span>
             ${item.fallback || "🐾"}
           </span>
 
@@ -1090,11 +1154,11 @@ function renderCollection() {
 
       const fallback =
         card.querySelector(
-          ".grid-fallback"
+          ".grid-item-art span"
         );
 
 
-      if (item.image) {
+      if(item.image){
 
         img.src =
           item.image;
@@ -1149,56 +1213,143 @@ function renderCollection() {
 
 
 /* ==========================================================
-   ROBUX MODAL
+   ПОПОЛНЕНИЕ
 ========================================================== */
 
-$("robuxButton")
+$("depositButton")
   .addEventListener(
     "click",
     () => {
 
-      $("maintenanceMessage")
-        .classList
-        .remove(
-          "hidden"
-        );
+      updateBalance();
 
+      $("depositAmount")
+        .value =
+        "";
 
       openModal(
-        "robuxModal"
+        "depositModal"
       );
 
     }
   );
 
 
-$("rubButton")
+document
+  .querySelectorAll(
+    ".quick-deposit button"
+  )
+  .forEach(
+    button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          const amount =
+            Number(
+              button.dataset.add
+            );
+
+
+          balance +=
+            amount;
+
+
+          updateBalance();
+
+
+          toast(
+            `Баланс пополнен на ${money(amount)}`
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+$("depositSubmit")
   .addEventListener(
     "click",
     () => {
 
-      $("maintenanceMessage")
-        .classList
-        .remove(
-          "hidden"
+      const amount =
+        Number(
+          $("depositAmount").value
         );
 
+
+      if(
+        !Number.isFinite(
+          amount
+        ) ||
+        amount <= 0
+      ){
+
+        toast(
+          "Введи корректную сумму пополнения"
+        );
+
+        return;
+
+      }
+
+
+      balance +=
+        Math.floor(
+          amount
+        );
+
+
+      updateBalance();
+
+
+      closeModal(
+        "depositModal"
+      );
+
+
+      toast(
+        `Баланс пополнен на ${money(amount)}`
+      );
+
     }
+  );
+
+
+/* ==========================================================
+   ROBUX
+========================================================== */
+
+$("robuxButton")
+  .addEventListener(
+    "click",
+    () =>
+      openModal(
+        "robuxModal"
+      )
+  );
+
+
+$("rubButton")
+  .addEventListener(
+    "click",
+    () =>
+      toast(
+        "Технические работы — покупка будет доступна совсем скоро"
+      )
   );
 
 
 $("uahButton")
   .addEventListener(
     "click",
-    () => {
-
-      $("maintenanceMessage")
-        .classList
-        .remove(
-          "hidden"
-        );
-
-    }
+    () =>
+      toast(
+        "Технические работы — покупка будет доступна совсем скоро"
+      )
   );
 
 
@@ -1207,8 +1358,8 @@ $("uahButton")
 ========================================================== */
 
 function createRollCard(
-  win
-) {
+  won
+){
 
   const card =
     document.createElement(
@@ -1222,11 +1373,11 @@ function createRollCard(
 
   card.innerHTML = `
     <span class="emoji">
-      ${win ? "🎃" : "💀"}
+      ${won ? "🎃" : "💀"}
     </span>
 
     <span class="label">
-      ${win ? "ВЫИГРЫШ" : "НЕУДАЧА"}
+      ${won ? "ВЫИГРЫШ" : "НЕУДАЧА"}
     </span>
   `;
 
@@ -1238,7 +1389,7 @@ function createRollCard(
 
 function animateRoll(
   won
-) {
+){
 
   return new Promise(
     resolve => {
@@ -1252,11 +1403,11 @@ function animateRoll(
 
 
       const total =
-        46;
+        52;
 
 
       const finalIndex =
-        34;
+        38;
 
 
       track.innerHTML =
@@ -1271,11 +1422,11 @@ function animateRoll(
         "translateX(0)";
 
 
-      for (
+      for(
         let i = 0;
         i < total;
         i++
-      ) {
+      ){
 
         track.appendChild(
           createRollCard(
@@ -1296,8 +1447,7 @@ function animateRoll(
 
 
       requestAnimationFrame(
-        () => {
-
+        () =>
           requestAnimationFrame(
             () => {
 
@@ -1316,25 +1466,23 @@ function animateRoll(
                   .width;
 
 
-              const targetOffset =
-                width /
-                2 -
+              const offset =
+                width / 2 -
                 (
                   card.offsetLeft +
-                  card.offsetWidth /
-                  2
+                  card.offsetWidth / 2
                 );
 
 
               track.style.transition =
-                "transform 3.6s cubic-bezier(.08,.72,.12,1)";
+                "transform 3.8s cubic-bezier(.08,.72,.12,1)";
 
 
               track.style.transform =
-                `translateX(${targetOffset}px)`;
+                `translateX(${offset}px)`;
 
 
-              window.setTimeout(
+              setTimeout(
                 () => {
 
                   screen
@@ -1347,13 +1495,11 @@ function animateRoll(
                   resolve();
 
                 },
-                3800
+                4000
               );
 
             }
-          );
-
-        }
+          )
       );
 
     }
@@ -1366,34 +1512,55 @@ function animateRoll(
    UPGRADE
 ========================================================== */
 
-async function upgrade() {
+async function upgrade(){
 
-  if (rolling) {
+  if(
+    rolling
+  ){
+
     return;
+
   }
 
 
-  if (
+  if(
     balance <
     source.price
-  ) {
+  ){
 
-    showToast(
+    toast(
       `Недостаточно средств. Нужно ${money(source.price)}.`
     );
 
     return;
+
   }
 
 
-  const displayedChance =
-    chanceFromMultiplier();
+  if(
+    source.id ===
+      target.id &&
+    source.price ===
+      target.price
+  ){
+
+    toast(
+      "Выбери другую цель для апгрейда"
+    );
+
+    return;
+
+  }
+
+
+  const chance =
+    displayedChance();
 
 
   const won =
-    Math.random() *
-    100 <
-    displayedChance;
+    fairOutcome(
+      chance
+    );
 
 
   rolling =
@@ -1412,7 +1579,7 @@ async function upgrade() {
     source.price;
 
 
-  if (won) {
+  if(won){
 
     wins++;
 
@@ -1420,12 +1587,14 @@ async function upgrade() {
     balance +=
       target.price;
 
-  } else {
+  }else{
 
     losses++;
 
   }
 
+
+  updateBalance();
 
   updateStats();
 
@@ -1452,11 +1621,12 @@ async function upgrade() {
   $("resultInfo")
     .innerHTML =
       won
+
         ? `
           <span>
             Шанс:
             <b>
-              ${displayedChance.toFixed(1)}%
+              ${chance.toFixed(1)}%
             </b>
           </span>
 
@@ -1471,11 +1641,12 @@ async function upgrade() {
             </b>
           </span>
         `
+
         : `
           <span>
             Шанс:
             <b>
-              ${displayedChance.toFixed(1)}%
+              ${chance.toFixed(1)}%
             </b>
           </span>
 
@@ -1520,13 +1691,12 @@ $("upgradeButton")
 $("closeResult")
   .addEventListener(
     "click",
-    () => {
-
+    () =>
       $("resultScreen")
         .classList
-        .add("hidden");
-
-    }
+        .add(
+          "hidden"
+        )
   );
 
 
@@ -1534,26 +1704,25 @@ $("closeResult")
    FALLING HALLOWEEN DECOR
 ========================================================== */
 
-function spawnPumpkins() {
+function spawnDecor(){
 
   const root =
-    $("pumpkins");
+    $("fallingDecor");
 
 
-  const icons =
-    [
-      "🎃",
-      "🍂",
-      "🕸️",
-      "🦇"
-    ];
+  const icons = [
+    "🎃",
+    "🍂",
+    "🕸️",
+    "🦇"
+  ];
 
 
-  for (
+  for(
     let i = 0;
-    i < 18;
+    i < 22;
     i++
-  ) {
+  ){
 
     const node =
       document.createElement(
@@ -1562,7 +1731,7 @@ function spawnPumpkins() {
 
 
     node.className =
-      "pumpkin";
+      "fall";
 
 
     node.textContent =
@@ -1579,15 +1748,15 @@ function spawnPumpkins() {
 
 
     node.style.fontSize =
-      `${10 + Math.random() * 12}px`;
+      `${9 + Math.random() * 12}px`;
 
 
     node.style.animationDelay =
-      `${-Math.random() * 14}s`;
+      `${-Math.random() * 15}s`;
 
 
     node.style.animationDuration =
-      `${9 + Math.random() * 9}s`;
+      `${8 + Math.random() * 9}s`;
 
 
     root.appendChild(
@@ -1607,6 +1776,8 @@ renderCollection();
 
 updateCards();
 
+updateBalance();
+
 updateStats();
 
-spawnPumpkins();
+spawnDecor();
