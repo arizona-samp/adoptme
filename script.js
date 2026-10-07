@@ -31,11 +31,11 @@ const ITEMS = {
   pet: [
 
     {
-      id:"dog",
-      name:"Dog",
+      id:"Ghost dog",
+      name:"Ghost Dog",
       rarity:"COMMON",
-      price:100,
-      image:"images/pet-dog.png",
+      price:82,
+      image:"images/ghost-dog.png",
       fallback:"🐶",
       halloween:false
     },
