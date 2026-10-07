@@ -1,29 +1,34 @@
 /* ==========================================================
-   ADOPT ME • HAUNTED UPGRADER V3
+   HAUNTED ADOPT
+   UPGRADER
 
-   Currency: RUB (₽)
+   ВАЖНО:
 
-   Логика:
-   - Баланс тратится только в магазине.
-   - Для апгрейда используется сам предмет.
-   - При проигрыше предмет пропадает.
-   - При выигрыше исходный предмет пропадает,
-     а целевой предмет добавляется в инвентарь.
-   - Шанс рассчитывается из цены исходного и целевого предмета.
-   - Используется честный пул результатов.
+   Деньги используются ТОЛЬКО для покупки предметов.
+
+   Апгрейд использует сам предмет из инвентаря.
+
+   WIN:
+   старый предмет удаляется
+   новый предмет добавляется
+
+   LOSS:
+   старый предмет удаляется
 ========================================================== */
 
 
 /* ==========================================================
    ПРЕДМЕТЫ
 
-   Здесь ты можешь менять:
-   name   = название
-   rarity = редкость
-   price  = цена в ₽
-   image  = путь к картинке
-   fallback = эмодзи, если картинки нет
-   halloween = Halloween предмет
+   МЕНЯТЬ ФОТО И ЦЕНЫ МОЖНО ТОЛЬКО ЗДЕСЬ.
+
+   price = цена в ₽
+
+   image = файл из папки images
+
+   Например:
+
+   image:"images/my-pet.png"
 ========================================================== */
 
 const ITEMS = {
@@ -31,13 +36,13 @@ const ITEMS = {
   pet: [
 
     {
-      id:"Ghost dog",
+      id:"ghost-dog",
       name:"Ghost Dog",
       rarity:"COMMON",
       price:82,
-      image:"images/ghost-dog.png",
+      image:"images/pet-ghost-dog.png",
       fallback:"🐶",
-      halloween:false
+      halloween:true
     },
 
     {
@@ -91,6 +96,26 @@ const ITEMS = {
     },
 
     {
+      id:"evil-chick",
+      name:"Evil Chick",
+      rarity:"LEGENDARY",
+      price:900,
+      image:"images/pet-evil-chick.png",
+      fallback:"🐣",
+      halloween:true
+    },
+
+    {
+      id:"scarecrow-cat",
+      name:"Scarecrow Cat",
+      rarity:"ULTRA-RARE",
+      price:950,
+      image:"images/pet-scarecrow-cat.png",
+      fallback:"🎃",
+      halloween:true
+    },
+
+    {
       id:"turtle",
       name:"Turtle",
       rarity:"LEGENDARY",
@@ -98,6 +123,16 @@ const ITEMS = {
       image:"images/pet-turtle.png",
       fallback:"🐢",
       halloween:false
+    },
+
+    {
+      id:"werewolf",
+      name:"Werewolf",
+      rarity:"ULTRA-RARE",
+      price:1250,
+      image:"images/pet-werewolf.png",
+      fallback:"🐺",
+      halloween:true
     },
 
     {
@@ -121,26 +156,6 @@ const ITEMS = {
     },
 
     {
-      id:"scarecrow-cat",
-      name:"Scarecrow Cat",
-      rarity:"ULTRA-RARE",
-      price:950,
-      image:"images/pet-scarecrow-cat.png",
-      fallback:"🎃",
-      halloween:true
-    },
-
-    {
-      id:"werewolf",
-      name:"Werewolf",
-      rarity:"ULTRA-RARE",
-      price:1250,
-      image:"images/pet-werewolf.png",
-      fallback:"🐺",
-      halloween:true
-    },
-
-    {
       id:"bat-dragon",
       name:"Bat Dragon",
       rarity:"LEGENDARY",
@@ -148,22 +163,22 @@ const ITEMS = {
       image:"images/pet-bat-dragon.png",
       fallback:"🦇",
       halloween:true
-    },
-
-    {
-      id:"evil-chick",
-      name:"Evil Chick",
-      rarity:"LEGENDARY",
-      price:900,
-      image:"images/pet-evil-chick.png",
-      fallback:"🐣",
-      halloween:true
     }
 
   ],
 
 
   potion: [
+
+    {
+      id:"speed-potion",
+      name:"Speed Potion",
+      rarity:"POTION",
+      price:180,
+      image:"images/potion-speed.png",
+      fallback:"⚡",
+      halloween:false
+    },
 
     {
       id:"ride-potion",
@@ -182,16 +197,6 @@ const ITEMS = {
       price:620,
       image:"images/potion-fly.png",
       fallback:"🧪",
-      halloween:false
-    },
-
-    {
-      id:"speed-potion",
-      name:"Speed Potion",
-      rarity:"POTION",
-      price:180,
-      image:"images/potion-speed.png",
-      fallback:"⚡",
       halloween:false
     },
 
@@ -221,21 +226,20 @@ const ITEMS = {
 
 
 /* ==========================================================
-   НАСТРОЙКИ
+   SETTINGS
 ========================================================== */
 
 const FAIR_POOL_SIZE = 200;
 
 
 /* ==========================================================
-   СОСТОЯНИЕ
+   VARIABLES
 ========================================================== */
 
 const fairPools = new Map();
 
-let category = "pet";
 
-let storeCategory = "pet";
+let category = "pet";
 
 let balance = 0;
 
@@ -253,18 +257,17 @@ let selectionMode = "source";
 
 
 /*
-   inventory:
+   ИНВЕНТАРЬ
 
-   itemId -> quantity
-
-   Пример:
-
-   dog -> 3
-   unicorn -> 1
+   id предмета -> количество
 */
 
 const inventory = new Map();
 
+
+/*
+   SOURCE
+*/
 
 let source = {
 
@@ -285,15 +288,21 @@ let source = {
 };
 
 
+/*
+   TARGET
+
+   Стартовая цель
+*/
+
 let target = {
   ...ITEMS.pet.find(
-    x=>x.id==="unicorn"
+    item => item.id === "unicorn"
   )
 };
 
 
 /* ==========================================================
-   DOM HELPER
+   DOM
 ========================================================== */
 
 const $ = id =>
@@ -301,13 +310,13 @@ const $ = id =>
 
 
 /* ==========================================================
-   ФОРМАТ ДЕНЕГ
+   MONEY
 ========================================================== */
 
 function money(value){
 
   return `${Math.round(
-    Number(value)||0
+    Number(value) || 0
   ).toLocaleString("ru-RU").replace(
     /\u00A0/g,
     " "
@@ -317,7 +326,7 @@ function money(value){
 
 
 /* ==========================================================
-   ПОЛУЧЕНИЕ ПРЕДМЕТОВ
+   ITEMS
 ========================================================== */
 
 function currentItems(){
@@ -327,51 +336,64 @@ function currentItems(){
 }
 
 
-function storeItems(){
-
-  return ITEMS[storeCategory];
-
-}
-
-
 function catalogItem(id){
 
   return [
+
     ...ITEMS.pet,
+
     ...ITEMS.potion
+
   ].find(
-    x=>x.id===id
+    item => item.id === id
   ) || null;
 
 }
 
 
 /* ==========================================================
-   ИНВЕНТАРЬ
+   INVENTORY
 ========================================================== */
 
-function addInventory(item,qty=1){
+function addInventory(
+  item,
+  amount = 1
+){
 
   inventory.set(
+
     item.id,
-    (inventory.get(item.id)||0)+qty
+
+    (inventory.get(item.id) || 0)
+    + amount
+
   );
 
 }
 
 
-function removeInventory(id,qty=1){
+function removeInventory(
+  id,
+  amount = 1
+){
 
   const next =
-    (inventory.get(id)||0)-qty;
+    (inventory.get(id) || 0)
+    - amount;
 
-  if(next>0){
 
-    inventory.set(id,next);
+  if(next > 0){
+
+    inventory.set(
+      id,
+      next
+    );
 
   }else{
 
-    inventory.delete(id);
+    inventory.delete(
+      id
+    );
 
   }
 
@@ -381,97 +403,126 @@ function removeInventory(id,qty=1){
 function inventoryItems(){
 
   return [
+
     ...inventory.entries()
+
   ]
 
   .map(
-    ([id,qty])=>({
-      item:catalogItem(id),
-      qty
+    ([id,quantity]) => ({
+
+      item:
+        catalogItem(id),
+
+      quantity
+
     })
   )
 
   .filter(
-    x=>x.item
+    x => x.item
   );
 
 }
 
 
 /* ==========================================================
-   БАЛАНС
+   BALANCE
 ========================================================== */
 
 function updateBalance(){
 
-  $("balanceValue").textContent =
-    money(balance);
+  $("balanceValue")
+    .textContent =
+      money(balance);
 
-  $("depositBalance").textContent =
-    money(balance);
 
-  $("storeBalance").textContent =
-    money(balance);
+  $("depositBalance")
+    .textContent =
+      money(balance);
 
 }
 
 
 /* ==========================================================
-   СТАТИСТИКА
+   STATS
 ========================================================== */
 
 function updateStats(){
 
-  $("attempts").textContent =
-    attempts;
+  $("attempts")
+    .textContent =
+      attempts;
 
-  $("wins").textContent =
-    wins;
 
-  $("losses").textContent =
-    losses;
+  $("wins")
+    .textContent =
+      wins;
 
-  $("winrate").textContent =
-    `${attempts
-      ? Math.round(
-          wins/attempts*100
-        )
-      : 0
-    }%`;
+
+  $("losses")
+    .textContent =
+      losses;
+
+
+  $("winrate")
+    .textContent =
+
+      `${
+        attempts
+
+        ? Math.round(
+            wins /
+            attempts *
+            100
+          )
+
+        : 0
+      }%`;
 
 }
 
 
 /* ==========================================================
-   МНОЖИТЕЛЬ
+   MULTIPLIER
 ========================================================== */
 
 function multiplier(){
 
-  return source.price>0
-    ? target.price/source.price
-    : 1;
+  if(
+    !source.price ||
+    !target.price
+  ){
+
+    return 1;
+
+  }
+
+
+  return (
+    target.price /
+    source.price
+  );
 
 }
 
 
 /* ==========================================================
-   ШАНС
+   CHANCE
 ==========================================================
 
-   Формула:
-
-   шанс = 98 / множитель
+   98 / multiplier
 
    Например:
 
-   предмет = 100 ₽
-   цель = 196 ₽
+   source = 100 ₽
+   target = 196 ₽
 
-   x1.96
+   multiplier = 1.96
 
-   98 / 1.96 = 50%
+   chance = 98 / 1.96
 
+   chance = 50%
 ========================================================== */
 
 function displayedChance(){
@@ -480,15 +531,24 @@ function displayedChance(){
     !source.price ||
     !target.price
   ){
+
     return 0;
+
   }
 
+
   return Math.max(
+
     1,
+
     Math.min(
+
       98,
-      98/multiplier()
+
+      98 / multiplier()
+
     )
+
   );
 
 }
@@ -500,90 +560,90 @@ function displayedChance(){
 
 function showToast(message){
 
-  const node =
+  const toast =
     $("toast");
 
-  node.textContent =
+
+  toast.textContent =
     message;
 
-  node.classList.remove(
+
+  toast.classList.remove(
     "hidden"
   );
 
-  node.classList.add(
+
+  toast.classList.add(
     "show"
   );
+
 
   clearTimeout(
     showToast.timer
   );
 
+
   showToast.timer =
-    setTimeout(()=>{
+    setTimeout(
+      ()=>{
 
-      node.classList.add(
-        "hidden"
-      );
+        toast.classList.add(
+          "hidden"
+        );
 
-      node.classList.remove(
-        "show"
-      );
+        toast.classList.remove(
+          "show"
+        );
 
-    },2400);
+      },
+      2400
+    );
 
 }
 
 
 /* ==========================================================
-   МОДАЛКИ
+   MODALS
 ========================================================== */
 
 function openModal(id){
 
-  $(id).classList.remove(
-    "hidden"
-  );
+  $(id)
+    .classList
+    .remove("hidden");
 
 }
 
 
 function closeModal(id){
 
-  $(id).classList.add(
-    "hidden"
-  );
+  $(id)
+    .classList
+    .add("hidden");
 
 }
 
 
 /* ==========================================================
-   КАРТИНКИ
+   IMAGE
 ========================================================== */
 
-function bindImage(
-  imgId,
-  fallbackId,
+function loadSmallImage(
+  imageElement,
+  fallbackElement,
   item
 ){
 
-  const img =
-    $(imgId);
-
-  const fallback =
-    $(fallbackId);
-
-
-  img.style.display =
+  imageElement.style.display =
     "none";
 
-  fallback.style.display =
+
+  fallbackElement.style.display =
     "block";
 
-  fallback.textContent =
-    item.fallback || "🐾";
 
-  img.src =
-    item.image || "";
+  fallbackElement.textContent =
+    item.fallback || "🐾";
 
 
   if(!item.image){
@@ -593,94 +653,160 @@ function bindImage(
   }
 
 
-  img.onload = ()=>{
-
-    img.style.display =
-      "block";
-
-    fallback.style.display =
-      "none";
-
-  };
+  imageElement.src =
+    item.image;
 
 
-  img.onerror = ()=>{
+  imageElement.onload =
+    ()=>{
 
-    img.style.display =
-      "none";
+      imageElement.style.display =
+        "block";
 
-    fallback.style.display =
-      "block";
 
-  };
+      fallbackElement.style.display =
+        "none";
+
+    };
+
+
+  imageElement.onerror =
+    ()=>{
+
+      imageElement.style.display =
+        "none";
+
+
+      fallbackElement.style.display =
+        "block";
+
+    };
 
 }
 
 
 /* ==========================================================
-   ОСНОВНЫЕ КАРТОЧКИ
+   MAIN CARDS
 ========================================================== */
 
 function updateCards(){
 
-  bindImage(
-    "sourceImage",
-    "sourceFallback",
+  /*
+    SOURCE
+  */
+
+  const sourceImage =
+    $("sourceImage");
+
+
+  const sourceFallback =
+    $("sourceFallback");
+
+
+  loadSmallImage(
+    sourceImage,
+    sourceFallback,
     source
   );
 
 
-  bindImage(
-    "targetImage",
-    "targetFallback",
+  /*
+    TARGET
+  */
+
+  const targetImage =
+    $("targetImage");
+
+
+  const targetFallback =
+    $("targetFallback");
+
+
+  loadSmallImage(
+    targetImage,
+    targetFallback,
     target
   );
 
 
-  $("sourceName").textContent =
-    source.name;
+  /*
+    TEXT
+  */
 
-  $("sourceMeta").textContent =
-    source.id
+  $("sourceName")
+    .textContent =
+      source.name;
+
+
+  $("sourceMeta")
+    .textContent =
+
+      source.id
+
       ? `${source.rarity} • FR`
+
       : source.rarity;
 
-  $("sourcePrice").textContent =
-    source.id
+
+  $("sourcePrice")
+    .textContent =
+
+      source.id
+
       ? money(source.price)
+
       : "Купи предмет в магазине";
 
 
-  $("targetName").textContent =
-    target.name;
-
-  $("targetMeta").textContent =
-    `${target.rarity} • FR`;
-
-  $("targetPrice").textContent =
-    money(target.price);
+  $("targetName")
+    .textContent =
+      target.name;
 
 
-  $("multiplier").textContent =
-    source.price
+  $("targetMeta")
+    .textContent =
+      `${target.rarity} • FR`;
+
+
+  $("targetPrice")
+    .textContent =
+      money(target.price);
+
+
+  $("multiplier")
+    .textContent =
+
+      source.price
+
       ? `x${multiplier().toFixed(2)}`
+
       : "x—";
 
 
-  $("chanceText").textContent =
-    source.price
+  $("chanceText")
+    .textContent =
+
+      source.price
+
       ? `Шанс ${displayedChance().toFixed(1)}%`
+
       : "Сначала купи предмет";
 
 
   document
-    .querySelectorAll(".chance-btn")
+    .querySelectorAll(
+      ".chance-btn"
+    )
     .forEach(button=>{
 
       button.classList.toggle(
+
         "active",
-        Number(button.dataset.chance)
-          === selectedChance
+
+        Number(
+          button.dataset.chance
+        ) === selectedChance
+
       );
 
     });
@@ -689,20 +815,29 @@ function updateCards(){
 
 
 /* ==========================================================
-   ЧЕСТНЫЙ ПУЛ
+   FAIR RESULT
 ========================================================== */
 
-function buildFairPool(chance){
+function buildFairPool(
+  chance
+){
 
   const winsNeeded =
     Math.round(
+
       chance *
       FAIR_POOL_SIZE /
       100
+
     );
 
-  const pool=[];
 
+  const pool = [];
+
+
+  /*
+    WIN
+  */
 
   for(
     let i=0;
@@ -715,6 +850,10 @@ function buildFairPool(chance){
   }
 
 
+  /*
+    LOSS
+  */
+
   for(
     let i=winsNeeded;
     i<FAIR_POOL_SIZE;
@@ -726,6 +865,10 @@ function buildFairPool(chance){
   }
 
 
+  /*
+    SHUFFLE
+  */
+
   for(
     let i=pool.length-1;
     i>0;
@@ -734,15 +877,19 @@ function buildFairPool(chance){
 
     const j =
       Math.floor(
-        Math.random()*(i+1)
+        Math.random() *
+        (i + 1)
       );
+
 
     [
       pool[i],
       pool[j]
-    ]=[
+    ] = [
+
       pool[j],
       pool[i]
+
     ];
 
   }
@@ -753,20 +900,35 @@ function buildFairPool(chance){
 }
 
 
-function fairOutcome(chance){
+function fairOutcome(
+  chance
+){
 
   const key =
-    Number(chance).toFixed(1);
+    Number(chance)
+      .toFixed(1);
 
 
   if(
-    !fairPools.has(key) ||
-    fairPools.get(key).length===0
+
+    !fairPools.has(key)
+
+    ||
+
+    fairPools
+      .get(key)
+      .length === 0
+
   ){
 
     fairPools.set(
+
       key,
-      buildFairPool(chance)
+
+      buildFairPool(
+        chance
+      )
+
     );
 
   }
@@ -780,18 +942,22 @@ function fairOutcome(chance){
 
 
 /* ==========================================================
-   КАТЕГОРИИ
+   CATEGORY
 ========================================================== */
 
 document
-  .querySelectorAll(".mode-btn")
+  .querySelectorAll(
+    ".mode-btn"
+  )
   .forEach(button=>{
 
     button.addEventListener(
       "click",
       ()=>{
 
-        if(rolling)return;
+        if(rolling){
+          return;
+        }
 
 
         category =
@@ -799,90 +965,125 @@ document
 
 
         document
-          .querySelectorAll(".mode-btn")
-          .forEach(x=>{
+          .querySelectorAll(
+            ".mode-btn"
+          )
+          .forEach(item=>{
 
-            x.classList.toggle(
+            item.classList.toggle(
               "active",
-              x===button
+              item === button
             );
 
           });
 
 
-        $("modeLabel").textContent =
-          category==="pet"
+        $("modeLabel")
+          .textContent =
+
+            category === "pet"
+
             ? "ПЕТЫ"
+
             : "ЗЕЛЬЕ";
 
 
+        /*
+          Смотрим, есть ли
+          купленные предметы
+          этой категории.
+        */
+
         const owned =
           inventoryItems()
-            .filter(({item})=>{
+            .filter(
+              ({item})=>{
 
-              return category==="pet"
+                return category === "pet"
 
-                ? ITEMS.pet.some(
-                    i=>i.id===item.id
-                  )
+                  ? ITEMS.pet.some(
+                      x =>
+                        x.id === item.id
+                    )
 
-                : ITEMS.potion.some(
-                    i=>i.id===item.id
-                  );
+                  : ITEMS.potion.some(
+                      x =>
+                        x.id === item.id
+                    );
 
-            });
-
-
-        source =
-          owned.length
-
-            ? {
-                ...owned[0].item
               }
-
-            : {
-
-                id:null,
-
-                name:"Нет предмета",
-
-                rarity:"ИНВЕНТАРЬ ПУСТ",
-
-                price:0,
-
-                image:"",
-
-                fallback:"🎒",
-
-                halloween:false
-
-              };
+            );
 
 
-        const next =
-          currentItems()
-            .find(
-              x=>x.price>(
-                source.price||0
-              )
-            )
-          ||
-          currentItems()[0];
+        /*
+          Первый предмет
+          этой категории.
+        */
 
+        if(owned.length){
 
-        if(next){
+          source =
+            {
+              ...owned[0].item
+            };
 
-          target={
-            ...next
+        }else{
+
+          source = {
+
+            id:null,
+
+            name:"Нет предмета",
+
+            rarity:
+              "ИНВЕНТАРЬ ПУСТ",
+
+            price:0,
+
+            image:"",
+
+            fallback:"🎒",
+
+            halloween:false
+
           };
 
         }
 
 
-        selectedChance=50;
+        /*
+          Ставим ближайшую
+          более дорогую цель.
+        */
+
+        const next =
+          currentItems()
+            .find(
+              x =>
+                x.price >
+                (source.price || 0)
+            );
 
 
-        renderCollection();
+        if(next){
+
+          target = {
+            ...next
+          };
+
+        }else{
+
+          target = {
+            ...currentItems()[0]
+          };
+
+        }
+
+
+        selectedChance = 50;
+
+
+        renderShop();
 
         renderInventory();
 
@@ -895,29 +1096,33 @@ document
 
 
 /* ==========================================================
-   ОКНО ВЫБОРА
+   SELECTION
 ========================================================== */
 
-function openSelection(mode){
+function openSelection(
+  mode
+){
 
   selectionMode =
     mode;
 
 
-  $("selectionTitle").textContent =
+  $("selectionTitle")
+    .textContent =
 
-    mode==="source"
+      mode === "source"
 
       ? "ВЫБЕРИ ПРЕДМЕТ ИЗ ИНВЕНТАРЯ"
 
       : "ВЫБЕРИ ЦЕЛЬ";
 
 
-  $("itemSearch").value =
-    "";
+  $("itemSearch")
+    .value = "";
 
 
   renderSelection();
+
 
   openModal(
     "selectionModal"
@@ -926,10 +1131,15 @@ function openSelection(mode){
 }
 
 
-function renderSelection(query=""){
+function renderSelection(
+  query = ""
+){
 
   const q =
-    query.trim().toLowerCase();
+    query
+      .trim()
+      .toLowerCase();
+
 
   const list =
     $("selectionList");
@@ -939,35 +1149,47 @@ function renderSelection(query=""){
     "";
 
 
-  /* SOURCE */
+  /*
+    SOURCE
+  */
 
-  if(selectionMode==="source"){
+  if(
+    selectionMode === "source"
+  ){
 
     const owned =
       inventoryItems()
-        .filter(({item})=>{
+        .filter(
+          ({item})=>{
 
-          const matchCat =
+            const categoryMatch =
 
-            category==="pet"
+              category === "pet"
 
               ? ITEMS.pet.some(
-                  i=>i.id===item.id
+                  x =>
+                    x.id === item.id
                 )
 
               : ITEMS.potion.some(
-                  i=>i.id===item.id
+                  x =>
+                    x.id === item.id
                 );
 
 
-          return (
-            matchCat &&
-            item.name
-              .toLowerCase()
-              .includes(q)
-          );
+            const searchMatch =
+              item.name
+                .toLowerCase()
+                .includes(q);
 
-        });
+
+            return (
+              categoryMatch &&
+              searchMatch
+            );
+
+          }
+        );
 
 
     if(!owned.length){
@@ -993,7 +1215,7 @@ function renderSelection(query=""){
 
 
     owned.forEach(
-      ({item,qty})=>{
+      ({item,quantity})=>{
 
         const row =
           document.createElement(
@@ -1001,11 +1223,12 @@ function renderSelection(query=""){
           );
 
 
-        row.type =
-          "button";
-
         row.className =
           "selection-row";
+
+
+        row.type =
+          "button";
 
 
         row.innerHTML = `
@@ -1015,10 +1238,11 @@ function renderSelection(query=""){
             <img alt="">
 
             <span>
-              ${item.fallback||"🐾"}
+              ${item.fallback || "🐾"}
             </span>
 
           </div>
+
 
           <div class="selection-details">
 
@@ -1028,7 +1252,7 @@ function renderSelection(query=""){
 
             <span>
               ${item.rarity}
-              • В ИНВЕНТАРЕ ×${qty}
+              • ИНВЕНТАРЬ ×${quantity}
             </span>
 
             <strong>
@@ -1037,6 +1261,7 @@ function renderSelection(query=""){
 
           </div>
 
+
           <span class="selection-type">
             ВЗЯТЬ
           </span>
@@ -1044,8 +1269,9 @@ function renderSelection(query=""){
         `;
 
 
-        const img =
+        const image =
           row.querySelector("img");
+
 
         const fallback =
           row.querySelector(
@@ -1053,23 +1279,11 @@ function renderSelection(query=""){
           );
 
 
-        if(item.image){
-
-          img.src =
-            item.image;
-
-
-          img.onload = ()=>{
-
-            img.style.display =
-              "block";
-
-            fallback.style.display =
-              "none";
-
-          };
-
-        }
+        loadSmallImage(
+          image,
+          fallback,
+          item
+        );
 
 
         row.addEventListener(
@@ -1092,9 +1306,7 @@ function renderSelection(query=""){
         );
 
 
-        list.appendChild(
-          row
-        );
+        list.appendChild(row);
 
       }
     );
@@ -1105,12 +1317,14 @@ function renderSelection(query=""){
   }
 
 
-  /* TARGET */
+  /*
+    TARGET
+  */
 
   currentItems()
 
     .filter(
-      item=>
+      item =>
         item.name
           .toLowerCase()
           .includes(q)
@@ -1119,8 +1333,11 @@ function renderSelection(query=""){
     .forEach(item=>{
 
       const disabled =
+
         !source.id ||
-        item.price<=source.price;
+
+        item.price <=
+        source.price;
 
 
       const row =
@@ -1131,6 +1348,7 @@ function renderSelection(query=""){
 
       row.type =
         "button";
+
 
       row.className =
         "selection-row";
@@ -1143,10 +1361,11 @@ function renderSelection(query=""){
           <img alt="">
 
           <span>
-            ${item.fallback||"🐾"}
+            ${item.fallback || "🐾"}
           </span>
 
         </div>
+
 
         <div class="selection-details">
 
@@ -1156,7 +1375,13 @@ function renderSelection(query=""){
 
           <span>
             ${item.rarity}
-            ${item.halloween?" • HALLOWEEN":""}
+
+            ${
+              item.halloween
+              ? " • HALLOWEEN"
+              : ""
+            }
+
           </span>
 
           <strong>
@@ -1165,8 +1390,15 @@ function renderSelection(query=""){
 
         </div>
 
+
         <span class="selection-type">
-          ${disabled?"НИЖЕ":"ЦЕЛЬ"}
+
+          ${
+            disabled
+            ? "НИЖЕ"
+            : "ЦЕЛЬ"
+          }
+
         </span>
 
       `;
@@ -1175,13 +1407,16 @@ function renderSelection(query=""){
       if(disabled){
 
         row.style.opacity =
-          ".43";
+          ".42";
 
       }
 
 
-      const img =
-        row.querySelector("img");
+      const image =
+        row.querySelector(
+          "img"
+        );
+
 
       const fallback =
         row.querySelector(
@@ -1189,23 +1424,11 @@ function renderSelection(query=""){
         );
 
 
-      if(item.image){
-
-        img.src =
-          item.image;
-
-
-        img.onload = ()=>{
-
-          img.style.display =
-            "block";
-
-          fallback.style.display =
-            "none";
-
-        };
-
-      }
+      loadSmallImage(
+        image,
+        fallback,
+        item
+      );
 
 
       row.addEventListener(
@@ -1223,7 +1446,7 @@ function renderSelection(query=""){
           }
 
 
-          target={
+          target = {
             ...item
           };
 
@@ -1239,9 +1462,7 @@ function renderSelection(query=""){
       );
 
 
-      list.appendChild(
-        row
-      );
+      list.appendChild(row);
 
     });
 
@@ -1251,50 +1472,40 @@ function renderSelection(query=""){
 $("sourceButton")
   .addEventListener(
     "click",
-    ()=>openSelection("source")
+    ()=>{
+      openSelection("source");
+    }
   );
 
 
 $("targetButton")
   .addEventListener(
     "click",
-    ()=>openSelection("target")
+    ()=>{
+      openSelection("target");
+    }
   );
 
 
 $("itemSearch")
   .addEventListener(
     "input",
-    e=>renderSelection(
-      e.target.value
-    )
-  );
-
-
-document
-  .querySelectorAll("[data-close]")
-  .forEach(btn=>
-
-    btn.addEventListener(
-      "click",
-      ()=>closeModal(
-        btn.dataset.close
-      )
-    )
-
+    event=>{
+      renderSelection(
+        event.target.value
+      );
+    }
   );
 
 
 /* ==========================================================
-   ШАНСЫ
-
-   Кнопки 5 / 15 / 30 / 50 / 75%
-
-   Мы подбираем цель по цене.
+   CHANCE BUTTONS
 ========================================================== */
 
 document
-  .querySelectorAll(".chance-btn")
+  .querySelectorAll(
+    ".chance-btn"
+  )
   .forEach(button=>{
 
     button.addEventListener(
@@ -1323,46 +1534,68 @@ document
 
 
         /*
-          При желаемом шансе:
+          Ищем цену цели.
 
-          targetPrice =
-          sourcePrice *
-          (98 / chance)
+          target =
+          source × (98/chance)
         */
 
-        const wanted =
+        const wantedPrice =
+
           source.price *
-          (98/chance);
+          (98 / chance);
 
 
-        const candidate =
+        const candidates =
+
           currentItems()
 
             .filter(
-              item=>
-                item.id!==source.id &&
-                item.price>source.price
-            )
+              item =>
 
-            .sort(
-              (a,b)=>
-                Math.abs(
-                  a.price-wanted
-                )
-                -
-                Math.abs(
-                  b.price-wanted
-                )
-            )[0];
+                item.id !== source.id &&
+
+                item.price >
+                source.price
+
+            );
 
 
-        if(candidate){
+        if(!candidates.length){
 
-          target={
-            ...candidate
-          };
+          updateCards();
+
+          return;
 
         }
+
+
+        candidates.sort(
+          (a,b)=>{
+
+            return (
+
+              Math.abs(
+                a.price -
+                wantedPrice
+              )
+
+              -
+
+              Math.abs(
+                b.price -
+                wantedPrice
+              )
+
+            );
+
+          }
+        );
+
+
+        target = {
+          ...candidates[0]
+        };
 
 
         updateCards();
@@ -1374,10 +1607,10 @@ document
 
 
 /* ==========================================================
-   КАТАЛОГ
+   SHOP
 ========================================================== */
 
-function renderCollection(){
+function renderShop(){
 
   const grid =
     $("itemGrid");
@@ -1387,17 +1620,14 @@ function renderCollection(){
     "";
 
 
-  currentItems().forEach(
-    item=>{
+  currentItems()
+    .forEach(item=>{
 
       const card =
         document.createElement(
-          "button"
+          "div"
         );
 
-
-      card.type =
-        "button";
 
       card.className =
         "grid-item";
@@ -1408,24 +1638,31 @@ function renderCollection(){
         ${
           item.halloween
 
-            ? '<span class="event-tag">🎃 EVENT</span>'
+          ? `
+            <span class="event-tag">
+              🎃 EVENT
+            </span>
+          `
 
-            : ""
+          : ""
         }
+
 
         <div class="grid-item-art">
 
           <img alt="">
 
           <span>
-            ${item.fallback||"🐾"}
+            ${item.fallback || "🐾"}
           </span>
 
         </div>
 
+
         <div class="grid-item-name">
           ${item.name}
         </div>
+
 
         <div class="grid-meta">
 
@@ -1439,11 +1676,22 @@ function renderCollection(){
 
         </div>
 
+
+        <button
+          class="shop-buy-btn"
+          data-buy-id="${item.id}"
+        >
+          КУПИТЬ
+        </button>
+
       `;
 
 
-      const img =
-        card.querySelector("img");
+      const image =
+        card.querySelector(
+          "img"
+        );
+
 
       const fallback =
         card.querySelector(
@@ -1451,37 +1699,58 @@ function renderCollection(){
         );
 
 
-      if(item.image){
+      loadSmallImage(
+        image,
+        fallback,
+        item
+      );
 
-        img.src =
-          item.image;
 
-
-        img.onload = ()=>{
-
-          img.style.display =
-            "block";
-
-          fallback.style.display =
-            "none";
-
-        };
-
-      }
-
+      /*
+        Саму карточку можно нажать,
+        чтобы выбрать её целью.
+      */
 
       card.addEventListener(
         "click",
-        ()=>{
+        event=>{
 
-          target={
+          if(
+            event.target.closest(
+              ".shop-buy-btn"
+            )
+          ){
+
+            return;
+
+          }
+
+
+          if(
+            source.id &&
+            item.price <= source.price
+          ){
+
+            showToast(
+              "Этот предмет дешевле твоего"
+            );
+
+            return;
+
+          }
+
+
+          target = {
             ...item
           };
 
 
           window.scrollTo({
+
             top:0,
+
             behavior:"smooth"
+
           });
 
 
@@ -1489,6 +1758,26 @@ function renderCollection(){
 
         }
       );
+
+
+      /*
+        BUY
+      */
+
+      card
+        .querySelector(
+          ".shop-buy-btn"
+        )
+        .addEventListener(
+          "click",
+          event=>{
+
+            event.stopPropagation();
+
+            purchaseItem(item);
+
+          }
+        );
 
 
       grid.appendChild(
@@ -1501,7 +1790,102 @@ function renderCollection(){
 
 
 /* ==========================================================
-   ИНВЕНТАРЬ
+   PURCHASE
+========================================================== */
+
+function purchaseItem(
+  item
+){
+
+  if(
+    balance <
+    item.price
+  ){
+
+    showToast(
+
+      `Недостаточно средств. Нужно ${money(
+        item.price
+      )}`
+
+    );
+
+    return;
+
+  }
+
+
+  /*
+    Деньги тратятся
+    только здесь.
+  */
+
+  balance -=
+    item.price;
+
+
+  /*
+    Добавляем предмет
+    в инвентарь.
+  */
+
+  addInventory(
+    item
+  );
+
+
+  /*
+    Если это первый предмет,
+    делаем его source.
+  */
+
+  if(!source.id){
+
+    source = {
+      ...item
+    };
+
+
+    const next =
+      currentItems()
+        .find(
+          x =>
+            x.price >
+            item.price
+        );
+
+
+    if(next){
+
+      target = {
+        ...next
+      };
+
+    }
+
+  }
+
+
+  updateBalance();
+
+  renderShop();
+
+  renderInventory();
+
+  updateCards();
+
+
+  showToast(
+    `${item.name} куплен за ${money(
+      item.price
+    )}`
+  );
+
+}
+
+
+/* ==========================================================
+   INVENTORY
 ========================================================== */
 
 function renderInventory(){
@@ -1515,27 +1899,30 @@ function renderInventory(){
 
 
   const owned =
-
     inventoryItems()
-      .filter(({item})=>{
+      .filter(
+        ({item})=>{
 
-        return category==="pet"
+          return category === "pet"
 
-          ? ITEMS.pet.some(
-              i=>i.id===item.id
-            )
+            ? ITEMS.pet.some(
+                x =>
+                  x.id === item.id
+              )
 
-          : ITEMS.potion.some(
-              i=>i.id===item.id
-            );
+            : ITEMS.potion.some(
+                x =>
+                  x.id === item.id
+              );
 
-      });
+        }
+      );
 
 
   const total =
     owned.reduce(
       (sum,x)=>
-        sum+x.qty,
+        sum + x.quantity,
       0
     );
 
@@ -1555,9 +1942,8 @@ function renderInventory(){
           🎒 ИНВЕНТАРЬ ПОКА ПУСТ
         </b>
 
-        Открой магазин, купи
-        первый предмет за ₽
-        и начинай апгрейд.
+        Купи свой первый предмет
+        в магазине выше.
 
       </div>
 
@@ -1569,16 +1955,13 @@ function renderInventory(){
 
 
   owned.forEach(
-    ({item,qty})=>{
+    ({item,quantity})=>{
 
       const card =
         document.createElement(
-          "button"
+          "div"
         );
 
-
-      card.type =
-        "button";
 
       card.className =
         "inventory-item";
@@ -1587,22 +1970,25 @@ function renderInventory(){
       card.innerHTML = `
 
         <span class="inventory-badge">
-          ×${qty}
+          ×${quantity}
         </span>
+
 
         <div class="inventory-item-art">
 
           <img alt="">
 
           <span>
-            ${item.fallback||"🐾"}
+            ${item.fallback || "🐾"}
           </span>
 
         </div>
 
+
         <div class="inventory-item-name">
           ${item.name}
         </div>
+
 
         <div class="inventory-item-meta">
 
@@ -1619,8 +2005,11 @@ function renderInventory(){
       `;
 
 
-      const img =
-        card.querySelector("img");
+      const image =
+        card.querySelector(
+          "img"
+        );
+
 
       const fallback =
         card.querySelector(
@@ -1628,38 +2017,20 @@ function renderInventory(){
         );
 
 
-      if(item.image){
-
-        img.src =
-          item.image;
-
-
-        img.onload = ()=>{
-
-          img.style.display =
-            "block";
-
-          fallback.style.display =
-            "none";
-
-        };
-
-      }
+      loadSmallImage(
+        image,
+        fallback,
+        item
+      );
 
 
       card.addEventListener(
         "click",
         ()=>{
 
-          source={
+          source = {
             ...item
           };
-
-
-          window.scrollTo({
-            top:0,
-            behavior:"smooth"
-          });
 
 
           updateCards();
@@ -1669,6 +2040,15 @@ function renderInventory(){
             `${item.name} выбран для апгрейда`
           );
 
+
+          window.scrollTo({
+
+            top:0,
+
+            behavior:"smooth"
+
+          });
+
         }
       );
 
@@ -1677,350 +2057,91 @@ function renderInventory(){
         card
       );
 
-    });
+    }
+  );
 
 }
 
 
 /* ==========================================================
-   МАГАЗИН
+   SHOP / INVENTORY TABS
 ========================================================== */
 
-function openStore(){
-
-  storeCategory =
-    category;
+const marketTabShop =
+  $("marketTabShop");
 
 
-  $("storeSearch").value =
-    "";
+const marketTabInventory =
+  $("marketTabInventory");
 
 
-  document
-    .querySelectorAll(".store-tab")
-    .forEach(x=>{
-
-      x.classList.toggle(
-        "active",
-        x.dataset.storeCategory
-          ===storeCategory
-      );
-
-    });
+const shopPanel =
+  $("shopPanel");
 
 
-  renderStore();
+const inventoryPanel =
+  $("inventoryPanel");
 
 
-  openModal(
-    "storeModal"
-  );
+marketTabShop.addEventListener(
+  "click",
+  ()=>{
 
-}
-
-
-function renderStore(query=""){
-
-  const q =
-    query.trim().toLowerCase();
+    marketTabShop
+      .classList
+      .add("active");
 
 
-  const list =
-    $("storeList");
+    marketTabInventory
+      .classList
+      .remove("active");
 
 
-  list.innerHTML =
-    "";
+    shopPanel
+      .classList
+      .remove("hidden");
 
 
-  $("storeBalance")
-    .textContent =
-      money(balance);
-
-
-  const items =
-    storeItems()
-      .filter(
-        item=>
-          item.name
-            .toLowerCase()
-            .includes(q)
-      );
-
-
-  if(!items.length){
-
-    list.innerHTML = `
-
-      <div class="shop-no-items">
-        Ничего не найдено.
-      </div>
-
-    `;
-
-    return;
+    inventoryPanel
+      .classList
+      .add("hidden");
 
   }
+);
 
 
-  items.forEach(item=>{
+marketTabInventory.addEventListener(
+  "click",
+  ()=>{
 
-    const owned =
-      inventory.get(item.id)||0;
-
-
-    const canBuy =
-      balance>=item.price;
-
-
-    const row =
-      document.createElement(
-        "div"
-      );
+    marketTabInventory
+      .classList
+      .add("active");
 
 
-    row.className =
-      "store-row";
+    marketTabShop
+      .classList
+      .remove("active");
 
 
-    row.innerHTML = `
-
-      <div class="store-row-art">
-
-        <img alt="">
-
-        <span>
-          ${item.fallback||"🐾"}
-        </span>
-
-      </div>
-
-      <div class="store-row-info">
-
-        <b>
-          ${item.name}
-        </b>
-
-        <span>
-          ${item.rarity}
-          ${item.halloween
-            ?" • HALLOWEEN"
-            :""
-          }
-        </span>
-
-        <strong>
-
-          ${money(item.price)}
-
-          ${
-            owned
-              ? ` • В инв. ×${owned}`
-              : ""
-          }
-
-        </strong>
-
-      </div>
-
-      <button
-        class="buy-item-btn"
-        ${canBuy?"":"disabled"}
-      >
-        КУПИТЬ
-      </button>
-
-    `;
+    inventoryPanel
+      .classList
+      .remove("hidden");
 
 
-    const img =
-      row.querySelector("img");
-
-    const fallback =
-      row.querySelector(
-        ".store-row-art span"
-      );
+    shopPanel
+      .classList
+      .add("hidden");
 
 
-    if(item.image){
-
-      img.src =
-        item.image;
-
-
-      img.onload = ()=>{
-
-        img.style.display =
-          "block";
-
-        fallback.style.display =
-          "none";
-
-      };
-
-    }
-
-
-    row
-      .querySelector(
-        ".buy-item-btn"
-      )
-      .addEventListener(
-        "click",
-        ()=>purchaseItem(item)
-      );
-
-
-    list.appendChild(
-      row
-    );
-
-  });
-
-}
-
-
-function purchaseItem(item){
-
-  if(balance<item.price){
-
-    showToast(
-      `Недостаточно средств. Нужно ${money(item.price)}`
-    );
-
-    return;
+    renderInventory();
 
   }
-
-
-  /*
-    Деньги тратятся только здесь.
-  */
-
-  balance -=
-    item.price;
-
-
-  /*
-    Предмет появляется
-    в инвентаре.
-  */
-
-  addInventory(
-    item
-  );
-
-
-  updateBalance();
-
-  renderInventory();
-
-  renderStore(
-    $("storeSearch").value
-  );
-
-
-  /*
-    Если это был первый купленный предмет,
-    автоматически устанавливаем его как source.
-  */
-
-  if(!source.id){
-
-    source={
-      ...item
-    };
-
-
-    const next =
-      currentItems()
-        .find(
-          x=>x.price>item.price
-        )
-      ||
-      currentItems()[0];
-
-
-    if(next){
-
-      target={
-        ...next
-      };
-
-    }
-
-
-    updateCards();
-
-  }
-
-
-  showToast(
-    `${item.name} куплен за ${money(item.price)}`
-  );
-
-}
-
-
-$("storeButton")
-  .addEventListener(
-    "click",
-    openStore
-  );
-
-
-$("inventoryShopButton")
-  .addEventListener(
-    "click",
-    openStore
-  );
-
-
-$("storeSearch")
-  .addEventListener(
-    "input",
-    e=>renderStore(
-      e.target.value
-    )
-  );
-
-
-document
-  .querySelectorAll(".store-tab")
-  .forEach(btn=>{
-
-    btn.addEventListener(
-      "click",
-      ()=>{
-
-        storeCategory =
-          btn.dataset.storeCategory;
-
-
-        document
-          .querySelectorAll(".store-tab")
-          .forEach(x=>{
-
-            x.classList.toggle(
-              "active",
-              x===btn
-            );
-
-          });
-
-
-        renderStore(
-          $("storeSearch").value
-        );
-
-      }
-    );
-
-  });
+);
 
 
 /* ==========================================================
-   ПОПОЛНЕНИЕ
+   DEPOSIT
 ========================================================== */
 
 $("depositButton")
@@ -2031,7 +2152,7 @@ $("depositButton")
       updateBalance();
 
       $("depositAmount")
-        .value="";
+        .value = "";
 
       openModal(
         "depositModal"
@@ -2064,13 +2185,10 @@ document
         updateBalance();
 
 
-        renderStore(
-          $("storeSearch").value
-        );
-
-
         showToast(
-          `Баланс пополнен на ${money(amount)}`
+          `Баланс пополнен на ${money(
+            amount
+          )}`
         );
 
       }
@@ -2092,7 +2210,7 @@ $("depositSubmit")
 
       if(
         !Number.isFinite(amount) ||
-        amount<=0
+        amount <= 0
       ){
 
         showToast(
@@ -2105,15 +2223,12 @@ $("depositSubmit")
 
 
       balance +=
-        Math.floor(amount);
+        Math.floor(
+          amount
+        );
 
 
       updateBalance();
-
-
-      renderStore(
-        $("storeSearch").value
-      );
 
 
       closeModal(
@@ -2122,7 +2237,9 @@ $("depositSubmit")
 
 
       showToast(
-        `Баланс пополнен на ${money(amount)}`
+        `Баланс пополнен на ${money(
+          amount
+        )}`
       );
 
     }
@@ -2136,35 +2253,73 @@ $("depositSubmit")
 $("robuxButton")
   .addEventListener(
     "click",
-    ()=>openModal(
-      "robuxModal"
-    )
+    ()=>{
+
+      openModal(
+        "robuxModal"
+      );
+
+    }
   );
 
 
 $("rubButton")
   .addEventListener(
     "click",
-    ()=>showToast(
-      "Технические работы — покупка будет доступна совсем скоро"
-    )
+    ()=>{
+
+      showToast(
+        "Технические работы — покупка будет доступна совсем скоро"
+      );
+
+    }
   );
 
 
 $("uahButton")
   .addEventListener(
     "click",
-    ()=>showToast(
-      "Технические работы — покупка будет доступна совсем скоро"
-    )
+    ()=>{
+
+      showToast(
+        "Технические работы — покупка будет доступна совсем скоро"
+      );
+
+    }
   );
+
+
+/* ==========================================================
+   CLOSE MODALS
+========================================================== */
+
+document
+  .querySelectorAll(
+    "[data-close]"
+  )
+  .forEach(button=>{
+
+    button.addEventListener(
+      "click",
+      ()=>{
+
+        closeModal(
+          button.dataset.close
+        );
+
+      }
+    );
+
+  });
 
 
 /* ==========================================================
    ROLL CARD
 ========================================================== */
 
-function createRollCard(won){
+function createRollCard(
+  won
+){
 
   const card =
     document.createElement(
@@ -2179,11 +2334,11 @@ function createRollCard(won){
   card.innerHTML = `
 
     <span class="emoji">
-      ${won?"🎃":"💀"}
+      ${won ? "🎃" : "💀"}
     </span>
 
     <span class="label">
-      ${won?"ВЫИГРЫШ":"НЕУДАЧА"}
+      ${won ? "ВЫИГРЫШ" : "НЕУДАЧА"}
     </span>
 
   `;
@@ -2195,16 +2350,19 @@ function createRollCard(won){
 
 
 /* ==========================================================
-   АНИМАЦИЯ РУЛЕТКИ
+   ROLL ANIMATION
 ========================================================== */
 
-function animateRoll(won){
+function animateRoll(
+  won
+){
 
   return new Promise(
     resolve=>{
 
       const screen =
         $("rollScreen");
+
 
       const track =
         $("rollTrack");
@@ -2237,23 +2395,25 @@ function animateRoll(won){
       ){
 
         track.appendChild(
+
           createRollCard(
 
-            i===finalIndex
+            i === finalIndex
 
               ? won
 
-              : Math.random()<.5
+              : Math.random() < .5
 
           )
+
         );
 
       }
 
 
-      screen.classList.remove(
-        "hidden"
-      );
+      screen
+        .classList
+        .remove("hidden");
 
 
       requestAnimationFrame(()=>{
@@ -2267,7 +2427,6 @@ function animateRoll(won){
 
 
           const width =
-
             document
               .querySelector(
                 ".roll-window"
@@ -2278,35 +2437,36 @@ function animateRoll(won){
 
           const offset =
 
-            width/2
+            width / 2
             -
             (
               card.offsetLeft
               +
-              card.offsetWidth/2
+              card.offsetWidth / 2
             );
 
 
           track.style.transition =
-
             "transform 3.8s cubic-bezier(.08,.72,.12,1)";
 
 
           track.style.transform =
-
             `translateX(${offset}px)`;
 
 
-          setTimeout(()=>{
+          setTimeout(
+            ()=>{
 
-            screen.classList.add(
-              "hidden"
-            );
+              screen
+                .classList
+                .add("hidden");
 
 
-            resolve();
+              resolve();
 
-          },4000);
+            },
+            4000
+          );
 
         });
 
@@ -2319,16 +2479,18 @@ function animateRoll(won){
 
 
 /* ==========================================================
-   АПГРЕЙД
+   UPGRADE
 ========================================================== */
 
 async function upgrade(){
 
-  if(rolling)return;
+  if(rolling){
+    return;
+  }
 
 
   /*
-    Проверяем source.
+    Проверяем предмет.
   */
 
   if(
@@ -2339,7 +2501,7 @@ async function upgrade(){
   ){
 
     showToast(
-      "Сначала купи предмет и выбери его из инвентаря"
+      "Сначала купи предмет в магазине"
     );
 
     return;
@@ -2348,12 +2510,12 @@ async function upgrade(){
 
 
   /*
-    Цель должна быть дороже.
+    Проверяем цель.
   */
 
   if(
     !target.id ||
-    target.price<=source.price
+    target.price <= source.price
   ){
 
     showToast(
@@ -2366,7 +2528,7 @@ async function upgrade(){
 
 
   /*
-    Считаем шанс.
+    Chance.
   */
 
   const chance =
@@ -2374,7 +2536,7 @@ async function upgrade(){
 
 
   /*
-    Получаем честный результат.
+    Результат.
   */
 
   const won =
@@ -2383,31 +2545,29 @@ async function upgrade(){
     );
 
 
-  rolling=true;
+  rolling = true;
+
 
   $("upgradeButton")
-    .disabled=true;
+    .disabled = true;
 
 
   attempts++;
 
 
   /*
-    ВАЖНО:
-
-    Используется именно предмет.
-
-    Деньги НЕ списываются.
+    Сохраняем предмет,
+    чтобы показать его
+    в проигрыше.
   */
 
-  const spentSource={
+  const spentSource = {
     ...source
   };
 
 
   /*
-    Забираем source
-    из инвентаря.
+    ЗАБИРАЕМ ПРЕДМЕТ
   */
 
   removeInventory(
@@ -2423,6 +2583,7 @@ async function upgrade(){
   if(won){
 
     wins++;
+
 
     addInventory(
       target,
@@ -2449,7 +2610,7 @@ async function upgrade(){
 
 
   /*
-    Рулетка.
+    РУЛЕТКА
   */
 
   await animateRoll(
@@ -2458,17 +2619,19 @@ async function upgrade(){
 
 
   /*
-    Окно результата.
+    RESULT
   */
 
-  $("resultEmoji").textContent =
-    won
+  $("resultEmoji")
+    .textContent =
+      won
       ? "🎃"
       : "💀";
 
 
-  $("resultTitle").textContent =
-    won
+  $("resultTitle")
+    .textContent =
+      won
       ? "ВЫИГРЫШ"
       : "ПРОИГРЫШ";
 
@@ -2520,65 +2683,70 @@ async function upgrade(){
 
 
   $("resultScreen")
-    .classList.remove(
-      "hidden"
-    );
+    .classList
+    .remove("hidden");
 
 
-  rolling=false;
+  rolling = false;
+
 
   $("upgradeButton")
-    .disabled=false;
+    .disabled = false;
 
 
   /*
-    После апгрейда пытаемся
-    выбрать следующий source
-    из инвентаря.
+    После результата
+    ищем предмет в инвентаре.
   */
 
   const owned =
     inventoryItems()
-      .find(({item})=>{
+      .find(
+        ({item})=>{
 
-        return category==="pet"
+          return category === "pet"
 
-          ? ITEMS.pet.some(
-              i=>i.id===item.id
-            )
+            ? ITEMS.pet.some(
+                x =>
+                  x.id === item.id
+              )
 
-          : ITEMS.potion.some(
-              i=>i.id===item.id
-            );
+            : ITEMS.potion.some(
+                x =>
+                  x.id === item.id
+              );
 
-      });
-
-
-  source =
-
-    owned
-
-      ? {
-          ...owned.item
         }
+      );
 
-      : {
 
-          id:null,
+  if(owned){
 
-          name:"Нет предмета",
+    source = {
+      ...owned.item
+    };
 
-          rarity:"ИНВЕНТАРЬ ПУСТ",
+  }else{
 
-          price:0,
+    source = {
 
-          image:"",
+      id:null,
 
-          fallback:"🎒",
+      name:"Нет предмета",
 
-          halloween:false
+      rarity:"ИНВЕНТАРЬ ПУСТ",
 
-        };
+      price:0,
+
+      image:"",
+
+      fallback:"🎒",
+
+      halloween:false
+
+    };
+
+  }
 
 
   /*
@@ -2588,22 +2756,17 @@ async function upgrade(){
   if(source.id){
 
     const next =
-
       currentItems()
         .find(
-          x=>
-            x.price>
+          item =>
+            item.price >
             source.price
-        )
-
-      ||
-
-      currentItems()[0];
+        );
 
 
     if(next){
 
-      target={
+      target = {
         ...next
       };
 
@@ -2614,11 +2777,14 @@ async function upgrade(){
 
   updateCards();
 
+
+  renderInventory();
+
 }
 
 
 /* ==========================================================
-   BUTTON UPGRADE
+   UPGRADE BUTTON
 ========================================================== */
 
 $("upgradeButton")
@@ -2635,11 +2801,13 @@ $("upgradeButton")
 $("closeResult")
   .addEventListener(
     "click",
-    ()=>
+    ()=>{
+
       $("resultScreen")
-        .classList.add(
-          "hidden"
-        )
+        .classList
+        .add("hidden");
+
+    }
   );
 
 
@@ -2653,7 +2821,7 @@ function spawnDecor(){
     $("fallingDecor");
 
 
-  const icons=[
+  const icons = [
     "🎃",
     "🍂",
     "🕸️",
@@ -2680,7 +2848,7 @@ function spawnDecor(){
     node.textContent =
       icons[
         Math.floor(
-          Math.random()*
+          Math.random() *
           icons.length
         )
       ];
@@ -2691,7 +2859,7 @@ function spawnDecor(){
 
 
     node.style.fontSize =
-      `${9+Math.random()*12}px`;
+      `${9 + Math.random()*12}px`;
 
 
     node.style.animationDelay =
@@ -2699,7 +2867,7 @@ function spawnDecor(){
 
 
     node.style.animationDuration =
-      `${8+Math.random()*9}s`;
+      `${8 + Math.random()*9}s`;
 
 
     root.appendChild(
@@ -2715,7 +2883,7 @@ function spawnDecor(){
    INIT
 ========================================================== */
 
-renderCollection();
+renderShop();
 
 renderInventory();
 
